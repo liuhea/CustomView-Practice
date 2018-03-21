@@ -1,1 +1,1 @@
-include ':customview', ':bigdrawableloaddemo', ':kotlinutilslib'
+include ':customview', ':bigdrawableloaddemo', ':kotlinutilslib', ':aidlservice', ':aidlclient'

@@ -1,13 +1,17 @@
 package com.liuhe.bigdrawableloaddemo
 
-import android.support.v7.app.AppCompatActivity
+import android.content.res.Resources
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
 import android.graphics.drawable.Drawable
 import android.util.Log
 import java.io.InputStream
 import android.graphics.BitmapFactory
 import com.liuhe.kotlinutilslib.log
+import android.os.Build
+import android.graphics.Bitmap
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 /**
  * 加载14M大图
@@ -33,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         checkImg()
         checkImageView()
+//        img_main_horse.setImageBitmap(
+//                decodeSampledBitmapFromResource(getResources(), R.id.myimage, 100, 100));
+
         btn_main_load_origin.setOnClickListener({
             loadImgFromAssets()
         })
@@ -51,6 +58,7 @@ class MainActivity : AppCompatActivity() {
      * 返回值也不再是一个Bitmap对象，而是null。虽然Bitmap是null，但是BitmapFactory.Options的outWidth、outHeight和outMimeType属性都会被赋值。
      */
     private fun checkImg() {
+
         val ims = assets.open("horse.jpg") as InputStream
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
@@ -73,7 +81,6 @@ class MainActivity : AppCompatActivity() {
     private fun checkImageView() {
         var imageWidth=0
         var imageHeight=0
-
         img_main_horse.post {
             Runnable {
                 "[2].控件尺寸 imageViewWidth=$imageWidth,imageViewHeight=$imageHeight".log()
@@ -100,6 +107,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun calculateInSampleSize(options: BitmapFactory.Options,
+                                      reqWidth: Int, reqHeight: Int): Int {
+        // 源图片的高度和宽度
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
+        if (height > reqHeight || width > reqWidth) {
+            // 计算出实际宽高和目标宽高的比率
+            val heightRatio = Math.round(height.toFloat() / reqHeight.toFloat())
+            val widthRatio = Math.round(width.toFloat() / reqWidth.toFloat())
+            // 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高
+            // 一定都会大于等于目标的宽和高。
+            inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
+        }
+        return inSampleSize
+    }
 
+    private fun decodeSampledBitmapFromResource(res: Resources, resId: Int,
+                                                reqWidth: Int, reqHeight: Int): Bitmap {
+        // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        // 调用上面定义的方法计算inSampleSize值
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+        // 使用获取到的inSampleSize值再次解析图片
+        options.inJustDecodeBounds = false
+        return BitmapFactory.decodeResource(res, resId, options)
+    }
 }
 
