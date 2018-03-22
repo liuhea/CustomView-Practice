@@ -11,6 +11,13 @@ import com.liuhe.aidlservice.IRemoteInterface
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    init {
+        println("init$companionField")
+    }
+
+    companion object {
+        var companionField = "haha"
+    }
 
     var iService: IRemoteInterface? = null
 
@@ -25,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             有些时候我们使用Service的时需要采用隐私启动的方式，但是Android 5.0一出来后，其中有个特性就是Service Intentmust be explitict，
             也就是说从Lollipop开始，service服务必须采用显示方式启动。
              */
-            intent.`package`="com.liuhe.aidlservice"
+            intent.`package` = "com.liuhe.aidlservice"
             bindService(intent, MyConn(), Context.BIND_AUTO_CREATE)
         })
 
