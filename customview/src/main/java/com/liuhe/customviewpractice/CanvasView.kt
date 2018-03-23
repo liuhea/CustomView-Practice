@@ -3,6 +3,7 @@ package com.liuhe.customviewpractice
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.liuhe.kotlinutilslib.getScreenHeight
 import com.liuhe.kotlinutilslib.getScreenWidth
@@ -21,7 +22,7 @@ import com.liuhe.kotlinutilslib.toast
  */
 class CanvasView(context: Context) : View(context) {
 
-    val txt = "刘贺"
+    val txt = "liuhe's blog"
     private lateinit var redPaint: Paint
     private lateinit var bluePaint: Paint
     private val facePoint = PointF(getScreenWidth(context) / 2, getScreenHeight(context) / 2)
@@ -71,14 +72,14 @@ class CanvasView(context: Context) : View(context) {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         "onDraw".log()
+
         /*
         画圆
         cx,cy圆心的坐标
         radius圆的半径
         paint 画笔
          */
-        context.toast("facePoint.x=${facePoint.x}，facePoint.y=${facePoint.y}")
-//        canvas?.drawCircle(facePoint.x, facePoint.y, faceRadius, paint)
+        canvas?.drawCircle(facePoint.x, facePoint.y, faceRadius, redPaint)
 
         /*
         画线
@@ -97,21 +98,27 @@ class CanvasView(context: Context) : View(context) {
          */
         val rectF = RectF(440f, 1060f, 640f, 1160f)
         canvas?.drawRect(rectF, redPaint)
-
         canvas?.drawArc(rectF, 30f, 120f, true, bluePaint)
 
         drawText(canvas)
 
     }
 
+    /**
+     * String text 文字
+     * float x, 所画图形的左上角x轴
+     * float y, 基线的位置
+     * Paint paint 画笔
+     * public void drawText(@NonNull String text, float x, float y, @NonNull Paint paint) {
+     */
     private fun drawText(canvas: Canvas?) {
         val paint = Paint().apply {
-            color=Color.RED
+            color = Color.RED
             //设置防抖动
-            isDither=true
+            isDither = true
             //抗锯齿
-            isAntiAlias=true
-            strokeWidth=3f
+            isAntiAlias = true
+            strokeWidth = 3f
             textSize = 100f
         }
 
@@ -120,11 +127,19 @@ class CanvasView(context: Context) : View(context) {
         paint.getTextBounds(txt, 0, txt.length, textBounds)
         val textH = textBounds.height()
 
+        // 基线
+        var baselineY = 100
+        canvas?.drawLine(0f, baselineY.toFloat(), 600f, baselineY.toFloat(), bluePaint)
         paint.style = Paint.Style.STROKE
-        canvas?.drawText(txt, 0f, (100 + textH * 0).toFloat(), paint)
+        canvas?.drawText(txt, 10f, baselineY.toFloat(), paint)
         paint.style = Paint.Style.FILL
-        canvas?.drawText(txt, 0f, (100 + textH * 1 + 50).toFloat(), paint)
+        canvas?.drawText(txt, 10f, (100 + textH * 1 + 50).toFloat(), paint)
         paint.style = Paint.Style.FILL_AND_STROKE
-        canvas?.drawText(txt, 0f, (100 + textH * 2 + 100).toFloat(), paint)
+        canvas?.drawText(txt, 10f, (100 + textH * 2 + 100).toFloat(), paint)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        "event?.x=${event?.x} -- event.rawX=${event?.rawX}".log()
+        return super.onTouchEvent(event)
     }
 }

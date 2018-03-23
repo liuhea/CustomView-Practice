@@ -32,7 +32,37 @@
     }
 ```
 
+## 绘制阶段
 
+
+```
+     /*
+    画圆
+    cx,cy圆心的坐标
+    radius圆的半径
+    paint 画笔
+     */
+    canvas?.drawCircle(facePoint.x, facePoint.y, faceRadius, redPaint)
+
+    /*
+    画线
+    startX,startY
+    stopX,stopY
+    paint
+     */
+    canvas?.drawLine(pointLeftEyeStart.x, pointLeftEyeStart.y, pointLeftEyeStop.x, pointLeftEyeStop.y, redPaint)
+
+    /*
+    RectF oval :　用于确定圆弧形状与尺寸的椭圆边界（即椭圆外切矩形）
+   float startAngle  开始角度（以时钟3点的方向为0°，顺时针为正方向）
+   float sweepAngle 扫过角度（以时钟3点的方向为0°，顺时针为正方向）
+   boolean useCenter 是否包含圆心
+   Paint paint绘制圆弧的画笔
+     */
+    val rectF = RectF(440f, 1060f, 640f, 1160f)
+    canvas?.drawRect(rectF, redPaint)
+    canvas?.drawArc(rectF, 30f, 120f, true, bluePaint)
+```
 
 ## 其它问题
 1. 自定义控件中的onMeasure和onLayout执行两次？
@@ -50,3 +80,12 @@
 测量工作；然后开始测量第二个子控件…；最后父控件所有的子控件都完成测量以后会调用setMeasureDimension方法保存自己的
 测量大小。值得注意的是，这个过程不只执行一次，也就是说有可能重复执行，因为有的时候，一轮测量下来，父控件发现某一个子控
 件的尺寸不符合要求，就会重新测量一遍。
+
+2. getX()与getRawX()
+
+```
+override fun onTouchEvent(event: MotionEvent?): Boolean {
+    return super.onTouchEvent(event)
+    "event?.x=${event?.x}-- event.rawX=${event?.rawX}".log()
+}
+```
