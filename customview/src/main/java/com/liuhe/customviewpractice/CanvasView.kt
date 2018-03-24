@@ -142,4 +142,9 @@ class CanvasView(context: Context) : View(context) {
         "event?.x=${event?.x} -- event.rawX=${event?.rawX}".log()
         return super.onTouchEvent(event)
     }
+
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        return super.dispatchTouchEvent(event)
+    }
+
 }

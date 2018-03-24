@@ -7,6 +7,7 @@ import android.os.Handler
 import com.liuhe.kotlinutilslib.log
 import android.os.Looper
 import android.os.Message
+import com.liuhe.kotlinutilslib.toast
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,9 +18,11 @@ class MainActivity : AppCompatActivity() {
         "onCreate()执行完毕".log()
 
         connChildThread()
+
     }
 
-    private var childHandler: Handler? = null
+    private var childHandler:
+            Handler? = null
 
     private fun connChildThread() {
         Thread(Runnable {
