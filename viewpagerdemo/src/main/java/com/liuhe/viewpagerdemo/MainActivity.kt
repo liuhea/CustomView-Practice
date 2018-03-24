@@ -25,20 +25,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        for (i in 0 until 3) {
+        for (i in 0 until 4) {
             val img = ImageView(this).apply { setImageResource(R.mipmap.ic_launcher) }
             imageList.add(img)
         }
 
-        for (i in 0 until 3) {
+        for (i in 0 until 4) {
             val fragment = LazyFragment(i)
             fragments.add(fragment)
         }
 
-        name.log()
+        "by lazy $name".log()
 //        vp_main_container.adapter = MyAdapter(imageList)
-//        vp_main_container.adapter = MyFragAdapter(supportFragmentManager, fragments)
-        vp_main_container.adapter = MyFragStateAdapter(supportFragmentManager, fragments)
+        vp_main_container.adapter = MyFragAdapter(supportFragmentManager, fragments)
+//        vp_main_container.adapter = MyFragStateAdapter(supportFragmentManager, fragments)
     }
 }
 
