@@ -7,7 +7,6 @@ import android.util.Log
 import java.io.InputStream
 import android.graphics.BitmapFactory
 import com.liuhe.kotlinutilslib.log
-import android.os.Build
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -79,8 +78,8 @@ class MainActivity : AppCompatActivity() {
      * 一般来讲在Activity.onCreate(...)、onResume()方法中都没有办法获取到View的实际宽高。
      */
     private fun checkImageView() {
-        var imageWidth=0
-        var imageHeight=0
+        var imageWidth = 0
+        var imageHeight = 0
         img_main_horse.post {
             Runnable {
                 "[2].控件尺寸 imageViewWidth=$imageWidth,imageViewHeight=$imageHeight".log()
@@ -89,7 +88,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadImgBitmapRegionDecoder() {
-
+        val inputStream = assets.open("horse.jpg") as InputStream
+        img_main_horse.setInputStream(inputStream)
     }
 
     private fun loadImgFromAssets() {
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             // load image as Drawable
             val d = Drawable.createFromStream(ims, null) as Drawable
             // set image to ImageView
-            img_main_horse.setImageDrawable(d)
+//            img_main_horse.setImageDrawable(d)
             ims.close()
         } catch (ex: Exception) {
             Log.e(TAG, ex.message)

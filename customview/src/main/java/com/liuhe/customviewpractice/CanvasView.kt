@@ -102,6 +102,9 @@ class CanvasView(context: Context) : View(context) {
 
         drawText(canvas)
 
+        val rect = Rect(100, 100, 200, 200)
+        canvas?.drawRect(rect, bluePaint)
+
     }
 
     /**

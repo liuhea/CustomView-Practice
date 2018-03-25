@@ -7,7 +7,7 @@
     tools:context="com.liuhe.bigdrawableloaddemo.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <ImageView
+    <com.liuhe.bigdrawableloaddemo.view.LargeImageView
         android:id="@+id/img_main_horse"
         android:layout_width="0dp"
         android:layout_height="0dp"
