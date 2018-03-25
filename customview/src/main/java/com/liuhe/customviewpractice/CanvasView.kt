@@ -111,6 +111,7 @@ class CanvasView(context: Context) : View(context) {
 
     /**
      * 绘制罗盘
+     * https://github.com/ChaosOctopus/ChaosCompass
      */
     private fun drawCompass(canvas: Canvas?) {
         val px = measuredWidth / 2
