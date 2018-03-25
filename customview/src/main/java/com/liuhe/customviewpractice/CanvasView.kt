@@ -8,7 +8,6 @@ import android.view.View
 import com.liuhe.kotlinutilslib.getScreenHeight
 import com.liuhe.kotlinutilslib.getScreenWidth
 import com.liuhe.kotlinutilslib.log
-import com.liuhe.kotlinutilslib.toast
 
 
 /**
@@ -105,6 +104,24 @@ class CanvasView(context: Context) : View(context) {
         val rect = Rect(100, 100, 200, 200)
         canvas?.drawRect(rect, bluePaint)
 
+        drawCompass(canvas)
+
+
+    }
+
+    /**
+     * 绘制罗盘
+     */
+    private fun drawCompass(canvas: Canvas?) {
+        val px = measuredWidth / 2
+        val py = measuredHeight / 2
+
+        //取较小的值为半径
+        val radius = Math.min(px, py)
+        //绘制背景
+        canvas?.drawCircle(px.toFloat(), py.toFloat(), radius.toFloat(), redPaint)
+//        用来保存Canvas的状态,save()方法之后的代码，可以调用Canvas的平移、放缩、旋转、裁剪等操作！
+        canvas?.save()
     }
 
     /**
