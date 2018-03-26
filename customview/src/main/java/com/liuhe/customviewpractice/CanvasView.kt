@@ -20,6 +20,7 @@ import com.liuhe.kotlinutilslib.log
  * kotlin 成员变量->主构造函数和init
  */
 class CanvasView(context: Context) : View(context) {
+    val TAG = "CanvasView"
 
     val txt = "liuhe's blog"
     private lateinit var redPaint: Paint
@@ -106,6 +107,9 @@ class CanvasView(context: Context) : View(context) {
 
         drawCompass(canvas)
 
+        ("$TAG-a=" + redPaint.measureText("a")).log()
+        ("$TAG-ab=" + redPaint.measureText("ab")).log()
+        ("$TAG-abc=" + redPaint.measureText("abc")).log()
 
     }
 

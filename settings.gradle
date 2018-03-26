@@ -1,1 +1,8 @@
-include ':customview', ':bigdrawableloaddemo', ':kotlinutilslib', ':aidlservice', ':aidlclient', ':viewpagerdemo', ':lifecycledemo'
+include ':customview',
+        ':bigdrawableloaddemo',
+        ':kotlinutilslib',
+//        ':aidlservice',
+//        ':aidlclient',
+//        ':viewpagerdemo',
+//        ':lifecycledemo',
+        ':videodemo'
