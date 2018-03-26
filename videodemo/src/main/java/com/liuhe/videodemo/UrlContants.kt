@@ -13,4 +13,4 @@ import android.os.Environment
 /**
  * 网络视频地址
  */
-val netUrl = "http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4"
+val netUrl = "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=89206&editionType=default&source=aliyun"
