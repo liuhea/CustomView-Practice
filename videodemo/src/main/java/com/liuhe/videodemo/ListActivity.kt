@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.liuhe.kotlinutilslib.log
 import com.liuhe.videodemo.activity.SurfaceViewActivity
 import com.liuhe.videodemo.activity.VideoViewActivity
 import kotlinx.android.synthetic.main.activity_list.*

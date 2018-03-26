@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.SurfaceHolder
 import com.liuhe.kotlinutilslib.CheckPermissionsActivity
+import com.liuhe.kotlinutilslib.toast
 import com.liuhe.videodemo.R
 import com.liuhe.videodemo.netUrl
 import kotlinx.android.synthetic.main.activity_surfview.*
@@ -34,13 +35,34 @@ class SurfaceViewActivity : CheckPermissionsActivity() {
                     mediaPlayer = MediaPlayer()
 //                    mediaPlayer!!.setDataSource("/storage/emulated/0/struggle.mp4")
                     mediaPlayer!!.setDataSource(this@SurfaceViewActivity, Uri.parse(netUrl))
-
                     mediaPlayer!!.prepare()
+                    mediaPlayer!!.setOnPreparedListener({
+                        mediaPlayer?.start()
+                        mediaPlayer?.seekTo(sp.getInt("current", 0))
+                    })
+
+                    mediaPlayer!!.setOnBufferingUpdateListener({ mediaPlayer: MediaPlayer, i: Int ->
+
+                        toast("currentPercent=$i")
+
+                    })
+
+                    mediaPlayer!!.setOnInfoListener { mp, what, extra ->
+                        when (what) {
+                            MediaPlayer.MEDIA_INFO_BUFFERING_START ->
+                                toast("开始卡顿")
+                            MediaPlayer.MEDIA_INFO_BUFFERING_END ->
+                                toast("卡顿结束")
+                        }
+                        true
+                    }
+
+                    mediaPlayer!!.setOnErrorListener { _, _, _ ->
+                        true
+                    }
                 } catch (e: Exception) {
                 }
                 mediaPlayer?.setDisplay(holder)
-                mediaPlayer?.start()
-                mediaPlayer?.seekTo(sp.getInt("current", 0))
             }
 
             override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
