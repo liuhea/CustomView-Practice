@@ -1,28 +1,22 @@
-package com.liuhe.videodemo
+package com.liuhe.videodemo.activity
 
 import android.os.Bundle
-import android.os.Environment
 import android.widget.MediaController
 import com.liuhe.kotlinutilslib.CheckPermissionsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import com.liuhe.videodemo.R
+import com.liuhe.videodemo.netUrl
 
 
-class MainActivity : CheckPermissionsActivity() {
-
-    private val localUrl = Environment.getExternalStorageDirectory().path + "/struggle.mp4"
-
-    /**
-     * 网络视频地址
-     */
-    private val netUrl = "http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4"
+class VideoViewActivity : CheckPermissionsActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//横竖屏切换
+//        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
 //        vv_main.setVideoURI(Uri.parse(localUrl))
         vv_main.setVideoURI(Uri.parse(netUrl))

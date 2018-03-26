@@ -1,12 +1,14 @@
-package com.example.surfaceviewapp
+package com.liuhe.videodemo.activity
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.SurfaceHolder
 import com.liuhe.kotlinutilslib.CheckPermissionsActivity
 import com.liuhe.videodemo.R
+import com.liuhe.videodemo.netUrl
 import kotlinx.android.synthetic.main.activity_surfview.*
 
 class SurfaceViewActivity : CheckPermissionsActivity() {
@@ -30,7 +32,9 @@ class SurfaceViewActivity : CheckPermissionsActivity() {
             override fun surfaceCreated(holder: SurfaceHolder?) {
                 try {
                     mediaPlayer = MediaPlayer()
-                    mediaPlayer!!.setDataSource("/storage/emulated/0/struggle.mp4")
+//                    mediaPlayer!!.setDataSource("/storage/emulated/0/struggle.mp4")
+                    mediaPlayer!!.setDataSource(this@SurfaceViewActivity, Uri.parse(netUrl))
+
                     mediaPlayer!!.prepare()
                 } catch (e: Exception) {
                 }
