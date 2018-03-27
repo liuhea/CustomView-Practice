@@ -51,7 +51,7 @@ class PathView(context: Context) : View(context) {
             //设置防抖动
             isDither = true
             // 画笔宽度
-             strokeWidth = 2f
+            strokeWidth = 2f
             //抗锯齿
             isAntiAlias = true
             style = Paint.Style.STROKE
@@ -101,18 +101,18 @@ class PathView(context: Context) : View(context) {
      * 绘制刻度线
      */
     private fun drawLines(canvas: Canvas?) {
-        var mLineInterval = (measuredWidth - 2 * mDividRuleLeftMargin - 2 * mFirstLineMargin) / DEFAULT_COUNT
+        var mLineInterval = (measuredWidth - 2 * mDividRuleLeftMargin - 2 * mFirstLineMargin) /( DEFAULT_COUNT*10)
         canvas?.save()
-        canvas?.translate(mFirstLineMargin.toFloat(), 0f)
+        canvas?.translate((mDividRuleLeftMargin + mFirstLineMargin).toFloat(), 0f)
         var top = 50
         for (i in 0..DEFAULT_COUNT * 10) {
             top = when {
-                i % 10 == 0 -> 50
-                i % 5 == 0 -> 30
-                else -> 50
+                i % 10 == 0 ->  (mDividRuleHeight + 100)-50
+                i % 5 == 0 -> (mDividRuleHeight + 100)-30
+                else -> (mDividRuleHeight + 100)-15
             }
 
-            canvas?.drawLine(0f, (mDividRuleHeight + 100).toFloat(), mLineInterval.toFloat(), (mDividRuleHeight + 100).toFloat(), greenPaint)
+            canvas?.drawLine(0f, (mDividRuleHeight + 100).toFloat(),0f, top.toFloat(), greenPaint)
             canvas?.translate(mLineInterval.toFloat(), 0f)
 
         }
@@ -176,7 +176,6 @@ class PathView(context: Context) : View(context) {
         canvas?.save()
         // 平移距离，dx,dy
 //        canvas?.translate(100f, 0f)
-
         // 旋转角度
         canvas?.rotate(10f)
         //缩放比例，sx,sy
