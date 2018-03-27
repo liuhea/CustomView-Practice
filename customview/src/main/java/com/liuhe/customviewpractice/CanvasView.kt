@@ -89,45 +89,47 @@ class CanvasView(context: Context) : View(context) {
          */
         canvas?.drawLine(pointLeftEyeStart.x, pointLeftEyeStart.y, pointLeftEyeStop.x, pointLeftEyeStop.y, redPaint)
 
-        /*
-        RectF oval :　用于确定圆弧形状与尺寸的椭圆边界（即椭圆外切矩形）
-       float startAngle  开始角度（以时钟3点的方向为0°，顺时针为正方向）
-       float sweepAngle 扫过角度（以时钟3点的方向为0°，顺时针为正方向）
-       boolean useCenter 是否包含圆心
-       Paint paint绘制圆弧的画笔
-         */
-        val rectF = RectF(440f, 1060f, 640f, 1160f)
-        canvas?.drawRect(rectF, redPaint)
-        canvas?.drawArc(rectF, 30f, 120f, true, bluePaint)
+        drawArc(canvas)
 
         drawText(canvas)
 
-        val rect = Rect(100, 100, 200, 200)
-        canvas?.drawRect(rect, bluePaint)
+        drawRect(canvas)
 
-        drawCompass(canvas)
-
-        ("$TAG-a=" + redPaint.measureText("a")).log()
-        ("$TAG-ab=" + redPaint.measureText("ab")).log()
-        ("$TAG-abc=" + redPaint.measureText("abc")).log()
+        measureText()
 
     }
 
     /**
-     * 绘制罗盘
-     * https://github.com/ChaosOctopus/ChaosCompass
+     * 测量字符串尺寸
      */
-    private fun drawCompass(canvas: Canvas?) {
-        val px = measuredWidth / 2
-        val py = measuredHeight / 2
-
-        //取较小的值为半径
-        val radius = Math.min(px, py)
-        //绘制背景
-        canvas?.drawCircle(px.toFloat(), py.toFloat(), radius.toFloat(), redPaint)
-//        用来保存Canvas的状态,save()方法之后的代码，可以调用Canvas的平移、放缩、旋转、裁剪等操作！
-        canvas?.save()
+    private fun measureText() {
+        ("$TAG-a=" + redPaint.measureText("a")).log()
+        ("$TAG-ab=" + redPaint.measureText("ab")).log()
+        ("$TAG-abc=" + redPaint.measureText("abc")).log()
     }
+
+    /**
+     * 绘制矩形
+     */
+    private fun drawRect(canvas: Canvas?) {
+        val rect = Rect(100, 100, 200, 200)
+        canvas?.drawRect(rect, bluePaint)
+    }
+
+    /**
+     *绘制椭圆
+     * RectF oval :　用于确定圆弧形状与尺寸的椭圆边界（即椭圆外切矩形）
+     * float startAngle  开始角度（以时钟3点的方向为0°，顺时针为正方向）
+     * float sweepAngle 扫过角度（以时钟3点的方向为0°，顺时针为正方向）
+     * boolean useCenter 是否包含圆心
+     * Paint paint绘制圆弧的画笔
+     */
+    private fun drawArc(canvas: Canvas?) {
+        val rectF = RectF(440f, 1060f, 640f, 1160f)
+        canvas?.drawRect(rectF, redPaint)
+        canvas?.drawArc(rectF, 30f, 120f, true, bluePaint)
+    }
+
 
     /**
      * String text 文字
@@ -166,10 +168,6 @@ class CanvasView(context: Context) : View(context) {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         "event?.x=${event?.x} -- event.rawX=${event?.rawX}".log()
         return super.onTouchEvent(event)
-    }
-
-    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
-        return super.dispatchTouchEvent(event)
     }
 
 }

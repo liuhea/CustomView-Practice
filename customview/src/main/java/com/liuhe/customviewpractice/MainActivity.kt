@@ -17,12 +17,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         "onCreate()执行完毕".log()
 
+        // 子线程之间的通信
         connChildThread()
-
     }
 
-    private var childHandler:
-            Handler? = null
+    private var childHandler: Handler? = null
 
     private fun connChildThread() {
         Thread(Runnable {
