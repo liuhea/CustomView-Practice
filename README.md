@@ -89,3 +89,13 @@ override fun onTouchEvent(event: MotionEvent?): Boolean {
     "event?.x=${event?.x}-- event.rawX=${event?.rawX}".log()
 }
 ```
+
+3. Canvas的save和restore
+
+在创建新的控件或修改现有的控件时，我们都会涉及到重写控件或View的onDraw方法。
+onDraw方法会传入一个Canvas对象，它是你用来绘制控件视觉界面的画布。
+在onDraw方法里，我们经常会看到调用save和restore方法，它们到底是干什么用的呢？
+* save：用来保存Canvas的状态。save之后，可以调用Canvas的平移、放缩、旋转、错切、裁剪等操作。
+* restore：用来恢复Canvas之前保存的状态。防止save后对Canvas执行的操作对后续的绘制有影响。
+
+save和restore要配对使用（restore可以比save少，但不能多），如果restore调用次数比save多，会引发Error。

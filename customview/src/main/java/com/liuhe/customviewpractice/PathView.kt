@@ -1,18 +1,34 @@
 package com.liuhe.customviewpractice
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.util.TypedValue
+
 
 /**
  * Created by liuhe on 27/03/2018.
  */
 class PathView(context: Context) : View(context) {
     private lateinit var greenPaint: Paint
+    private lateinit var grayPaint: Paint
+
+
+    // 刻度尺高度
+    private val DIVIDING_RULE_HEIGHT = 70
+
+    // 距离左右间
+    private val DIVIDING_RULE_MARGIN_LEFT_RIGHT = 10
+
+    // 第一条线距离边框距离
+    private val FIRST_LINE_MARGIN = 5
+    // 打算绘制的厘米数
+    private val DEFAULT_COUNT = 9
+    private var mDividRuleHeight: Int = 0
+    private var mHalfRuleHeight: Int = 0
+    private var mFirstLineMargin: Int = 0
+    private var mDividRuleLeftMargin: Int = 0
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : this(context) {
@@ -24,22 +40,89 @@ class PathView(context: Context) : View(context) {
             color = Color.GREEN
             //设置防抖动
             isDither = true
-            strokeWidth = 10f
+            strokeWidth = 5f
             //抗锯齿
             isAntiAlias = true
             style = Paint.Style.STROKE
 
         }
+        grayPaint = Paint().apply {
+            color = Color.GRAY
+            //设置防抖动
+            isDither = true
+            // 画笔宽度
+             strokeWidth = 2f
+            //抗锯齿
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+
+        }
+
+        mDividRuleHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DIVIDING_RULE_HEIGHT.toFloat(), resources.displayMetrics).toInt()
+        mHalfRuleHeight = mDividRuleHeight / 2
+
+        mDividRuleLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DIVIDING_RULE_MARGIN_LEFT_RIGHT.toFloat(), resources.displayMetrics).toInt()
+        mFirstLineMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                FIRST_LINE_MARGIN.toFloat(), resources.displayMetrics).toInt()
+
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        canvas?.drawLine(200f, 0f, 200f, 1000f, greenPaint)
 //        drawPath(canvas)
-        drawQuad(canvas)
+//        drawQuad(canvas)
+//        doOtherThings(canvas)
 
-        doOtherThings(canvas)
+        drawRuler(canvas)
+    }
+
+
+    /**
+     * 绘制一个尺子
+     *
+     * ref: https://blog.csdn.net/tianjian4592/article/details/45234419
+     */
+    private fun drawRuler(canvas: Canvas?) {
+        //外框
+        drawOuter(canvas)
+        // 刻度
+        drawLines(canvas)
+        // 数字
+        drawNumbers(canvas)
+    }
+
+    private fun drawNumbers(canvas: Canvas?) {
+    }
+
+    /**
+     * 绘制刻度线
+     */
+    private fun drawLines(canvas: Canvas?) {
+        var mLineInterval = (measuredWidth - 2 * mDividRuleLeftMargin - 2 * mFirstLineMargin) / DEFAULT_COUNT
+        canvas?.save()
+        canvas?.translate(mFirstLineMargin.toFloat(), 0f)
+        var top = 50
+        for (i in 0..DEFAULT_COUNT * 10) {
+            top = when {
+                i % 10 == 0 -> 50
+                i % 5 == 0 -> 30
+                else -> 50
+            }
+
+            canvas?.drawLine(0f, (mDividRuleHeight + 100).toFloat(), mLineInterval.toFloat(), (mDividRuleHeight + 100).toFloat(), greenPaint)
+            canvas?.translate(mLineInterval.toFloat(), 0f)
+
+        }
+        canvas?.restore()
+    }
+
+    private fun drawOuter(canvas: Canvas?) {
+        val outRectF = Rect(mDividRuleLeftMargin, 100, (measuredWidth - mDividRuleLeftMargin),
+                mDividRuleHeight + 100)
+        canvas?.drawRect(outRectF, grayPaint)
     }
 
     /**
@@ -82,13 +165,19 @@ class PathView(context: Context) : View(context) {
     /**
      * canvas其他操作
      * 平移、旋转、缩放等操作之前必须先调用save方法处理后再调用restore方法
+     *
+     * 平移和旋转实际是对坐标系的平移和旋转。
+     *
+     * sava(): 用来保存Canvas的状态。save之后，可以调用Canvas的平移、放缩、旋转、错切、裁剪等操作。
+     * restore(): 用来恢复Canvas之前保存的状态。防止save后对Canvas执行的操作对后续的绘制有影响。
+     * save和restore要配对使用（restore可以比save少，但不能多），如果restore调用次数比save多，会引发Error。
      */
     private fun doOtherThings(canvas: Canvas?) {
         canvas?.save()
         // 平移距离，dx,dy
 //        canvas?.translate(100f, 0f)
 
-    // 旋转角度
+        // 旋转角度
         canvas?.rotate(10f)
         //缩放比例，sx,sy
 //        canvas?.scale(1.2f,0.5f)
