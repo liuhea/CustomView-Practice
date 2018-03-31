@@ -14,21 +14,24 @@ class PathView(context: Context) : View(context) {
     private lateinit var greenPaint: Paint
     private lateinit var grayPaint: Paint
 
-
     // 刻度尺高度
     private val DIVIDING_RULE_HEIGHT = 70
 
     // 距离左右间
     private val DIVIDING_RULE_MARGIN_LEFT_RIGHT = 10
 
+    private val TOTAL_SQUARE_COUNT = 9
+
+
     // 第一条线距离边框距离
     private val FIRST_LINE_MARGIN = 5
     // 打算绘制的厘米数
-    private val DEFAULT_COUNT = 9
+    private val DEFAULT_COUNT = 10
     private var mDividRuleHeight: Int = 0
     private var mHalfRuleHeight: Int = 0
     private var mFirstLineMargin: Int = 0
     private var mDividRuleLeftMargin: Int = 0
+
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : this(context) {
@@ -78,6 +81,26 @@ class PathView(context: Context) : View(context) {
 //        doOtherThings(canvas)
 
         drawRuler(canvas)
+
+        drawSquare(canvas)
+    }
+
+    /**
+     * 绘制正方形
+     */
+    private fun drawSquare(canvas: Canvas?) {
+        val rect = Rect(200, 400, 600, 800)
+        for (i in 0 until TOTAL_SQUARE_COUNT) {
+            // 保存画布
+            canvas?.save()
+            val fraction = i.toFloat() / TOTAL_SQUARE_COUNT
+            // 将画布以正方形中心进行缩放
+//            前两个参数为将画布在x、y方向上缩放的倍数，而px和py 分别为缩放的基准点，如下图所示：
+            canvas?.scale(fraction, fraction, 400f, 600f)
+            canvas?.drawRect(rect, greenPaint)
+            // 画布回滚
+            canvas?.restore()
+        }
     }
 
 
