@@ -108,16 +108,32 @@ onDraw方法会传入一个Canvas对象，它是你用来绘制控件视觉界�
 save和restore要配对使用（restore可以比save少，但不能多），如果restore调用次数比save多，会引发Error。
 
 4. Canvas的scale()
-    // x,y缩放比例
+    
+   // x,y缩放比例
    public void scale (float sx, float sy) ;
 
    // 指定缩放的基准点
    public final void scale (float sx,float sy, float px, float py);
 
 5. 类的加载过程
-
-  java类的加载过程 静态代码块及静态成员->成员变量->构造函数
-  kotlin 成员变量->主构造函数和init
+    
+        java类的加载过程 静态代码块及静态成员->成员变量->构造函数
+        kotlin 成员变量->主构造函数和init
+      
 
 6. 绘制罗盘
     https://github.com/ChaosOctopus/ChaosCompass
+    
+7. kotlin自定义控件，要在主构造上使用多参数的，否则在xml中使用，findViewById会报NPE,比如：  
+class PieView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : View(context, attrs, defStyleAttr) {
+
+8. requestLayout() 与 invalidate（）
+
+    invalidate()方法会执行draw过程，重绘View树。
+    当View的，隐显改变,背景改变,焦点状态和一些其他状态改变，会引起invalidate操作。
+    View（非容器类）调用invalidate方法只会重绘自身，ViewGroup调用则会重绘整个View树。
+    
+    当View的宽高发生了变化，现在所在区域发生变化，调用requestLayout()方法重新对View布局。
+    View执行requestLayout()方法，会向上递归到顶级父View中，再执行这个顶级父View的requestLayout，所以其他View的onMeasure，onLayout也可能会被调用。
+    
+    进行View更新时，若仅View的显示内容发生改变且新的内容不影响View的大小、位置，则只需调用invalidate方法；若View的宽高、位置发生改变且显示内容不变，只需调用requestLayout方法；若两者均发生改变，则需调用两者，按照View的绘制流程，推荐先调用requestLayout方法再调用invalidate方法。
