@@ -99,3 +99,10 @@ onDraw方法会传入一个Canvas对象，它是你用来绘制控件视觉界�
 * restore：用来恢复Canvas之前保存的状态。防止save后对Canvas执行的操作对后续的绘制有影响。
 
 save和restore要配对使用（restore可以比save少，但不能多），如果restore调用次数比save多，会引发Error。
+
+4. Canvas的scale()
+    // x,y缩放比例
+   public void scale (float sx, float sy) ;
+
+   // 指定缩放的基准点
+   public final void scale (float sx,float sy, float px, float py);

@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.util.TypedValue
+import java.util.Collections.rotate
 
 
 /**
@@ -83,6 +84,41 @@ class PathView(context: Context) : View(context) {
         drawRuler(canvas)
 
         drawSquare(canvas)
+
+        drawClock(canvas)
+    }
+
+    /**
+     * 绘制闹钟表盘
+     */
+    private fun drawClock(canvas: Canvas?) {
+        var halfWidth = (width / 2).toFloat()
+        var halfHeight = (height / 2).toFloat()
+        var radius = width / 2.toFloat() - 10
+        var longWidth = 50
+        var shortWidth = 20
+        var lineTop = halfHeight - radius
+        var lineBottom=0f
+        canvas?.drawCircle(halfWidth, halfHeight, radius, grayPaint)
+        for (i in 0..360) {
+            if (i % 30 == 0) {
+                lineBottom = (lineTop + longWidth)
+                greenPaint.strokeWidth = 4F
+            } else {
+                lineBottom = (lineTop + shortWidth)
+                greenPaint.strokeWidth = 2F
+            }
+
+            if (i % 6 == 0) {
+                canvas?.save()
+                greenPaint.color=Color.RED
+                canvas?.rotate(i.toFloat(), halfWidth, halfHeight)
+                canvas?.drawLine(halfWidth, lineTop, halfWidth, lineBottom, greenPaint)
+                canvas?.restore()
+            }
+        }
+        greenPaint.color=Color.GREEN
+
     }
 
     /**
