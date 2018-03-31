@@ -55,6 +55,7 @@ class PathView(context: Context) : View(context) {
             //抗锯齿
             isAntiAlias = true
             style = Paint.Style.STROKE
+            textSize = 40f
 
         }
 
@@ -95,24 +96,33 @@ class PathView(context: Context) : View(context) {
     }
 
     private fun drawNumbers(canvas: Canvas?) {
+        var mLineInterval = (measuredWidth - 2 * mDividRuleLeftMargin - 2 * mFirstLineMargin) / (DEFAULT_COUNT)
+
+        canvas?.save()
+        for (i in 0..DEFAULT_COUNT * 10) {
+            top = (mDividRuleHeight + 100) - 50
+            canvas?.drawText(i.toString(), (mDividRuleLeftMargin).toFloat(), top.toFloat() - 10, grayPaint)
+            canvas?.translate(mLineInterval.toFloat(), 0f)
+        }
+        canvas?.restore()
     }
 
     /**
      * 绘制刻度线
      */
     private fun drawLines(canvas: Canvas?) {
-        var mLineInterval = (measuredWidth - 2 * mDividRuleLeftMargin - 2 * mFirstLineMargin) /( DEFAULT_COUNT*10)
+        var mLineInterval = (measuredWidth - 2 * mDividRuleLeftMargin - 2 * mFirstLineMargin) / (DEFAULT_COUNT * 10)
         canvas?.save()
         canvas?.translate((mDividRuleLeftMargin + mFirstLineMargin).toFloat(), 0f)
         var top = 50
         for (i in 0..DEFAULT_COUNT * 10) {
             top = when {
-                i % 10 == 0 ->  (mDividRuleHeight + 100)-50
-                i % 5 == 0 -> (mDividRuleHeight + 100)-30
-                else -> (mDividRuleHeight + 100)-15
+                i % 10 == 0 -> (mDividRuleHeight + 100) - 50
+                i % 5 == 0 -> (mDividRuleHeight + 100) - 30
+                else -> (mDividRuleHeight + 100) - 15
             }
 
-            canvas?.drawLine(0f, (mDividRuleHeight + 100).toFloat(),0f, top.toFloat(), greenPaint)
+            canvas?.drawLine(0f, (mDividRuleHeight + 100).toFloat(), 0f, top.toFloat(), greenPaint)
             canvas?.translate(mLineInterval.toFloat(), 0f)
 
         }
