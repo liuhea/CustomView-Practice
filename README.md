@@ -64,6 +64,13 @@
     canvas?.drawArc(rectF, 30f, 120f, true, bluePaint)
 ```
 
+Paint Style
+       Paint.Style.FILL_AND_STROKE 描边并且填充
+       Paint.Style.FILL 填充，实心
+       Paint.Style.STROKE 描边，空心
+
+
+
 ## 其它问题
 1. 自定义控件中的onMeasure和onLayout执行两次？
 
@@ -106,3 +113,11 @@ save和restore要配对使用（restore可以比save少，但不能多），如�
 
    // 指定缩放的基准点
    public final void scale (float sx,float sy, float px, float py);
+
+5. 类的加载过程
+
+  java类的加载过程 静态代码块及静态成员->成员变量->构造函数
+  kotlin 成员变量->主构造函数和init
+
+6. 绘制罗盘
+    https://github.com/ChaosOctopus/ChaosCompass

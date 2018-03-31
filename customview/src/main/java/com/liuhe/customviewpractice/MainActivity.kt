@@ -1,47 +1,34 @@
 package com.liuhe.customviewpractice
 
-import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import com.liuhe.kotlinutilslib.log
-import android.os.Looper
-import android.os.Message
-import com.liuhe.kotlinutilslib.toast
+import com.liuhe.customviewpractice.bean.PieData
+import kotlinx.android.synthetic.main.activity_pie.*
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_pie)
         "onCreate()执行完毕".log()
-
-        // 子线程之间的通信
-        connChildThread()
+        mockPieData()
     }
 
-    private var childHandler: Handler? = null
-
-    private fun connChildThread() {
-        Thread(Runnable {
-            Looper.prepare()
-            childHandler = @SuppressLint("HandlerLeak")
-            object : Handler() {
-                override fun handleMessage(msg: Message) {
-                    super.handleMessage(msg)
-                    System.out.println("这个消息是从-->>" + msg.obj + "过来的，在" + "btn的子线程当中" + "中执行的")
-                }
-            }
-            Looper.loop()//开始轮循
-        }).start()
-
-        Thread(Runnable {
-            val msg = childHandler?.obtainMessage()
-            msg?.obj = "btn2当中子线程"
-            childHandler?.sendMessage(msg)
-        }).start()
+    /**
+     * 模拟扇形数据
+     */
+    private fun mockPieData() {
+        var pies = mutableListOf<PieData>()
+        val colors = listOf(0xFFCCFF00, 0xFF6495ED, 0xFFE32636, 0xFF800000, 0xFF808000, 0xFFFF8C69, 0xFF808080,
+			0xFFE6B800, 0xFF7CFC00)
+        for (i in 0 until colors.size) {
+            pies.add(PieData(i.toFloat(), colors[i]))
+        }
+        pie_main?.setData(pies)
     }
+
 
     override fun onStart() {
         super.onStart()

@@ -1,15 +1,16 @@
-package com.liuhe.customviewpractice
+package com.liuhe.customviewpractice.widget
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.util.TypedValue
-import java.util.Collections.rotate
 
 
 /**
  * Created by liuhe on 27/03/2018.
+ *
+ * canvas 旋转-rotate、偏移-translate、缩放-scale
  */
 class PathView(context: Context) : View(context) {
     private lateinit var greenPaint: Paint
@@ -98,7 +99,7 @@ class PathView(context: Context) : View(context) {
         var longWidth = 50
         var shortWidth = 20
         var lineTop = halfHeight - radius
-        var lineBottom=0f
+        var lineBottom = 0f
         canvas?.drawCircle(halfWidth, halfHeight, radius, grayPaint)
         for (i in 0..360) {
             if (i % 30 == 0) {
@@ -111,13 +112,13 @@ class PathView(context: Context) : View(context) {
 
             if (i % 6 == 0) {
                 canvas?.save()
-                greenPaint.color=Color.RED
+                greenPaint.color = Color.RED
                 canvas?.rotate(i.toFloat(), halfWidth, halfHeight)
                 canvas?.drawLine(halfWidth, lineTop, halfWidth, lineBottom, greenPaint)
                 canvas?.restore()
             }
         }
-        greenPaint.color=Color.GREEN
+        greenPaint.color = Color.GREEN
 
     }
 

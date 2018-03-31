@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     var iService: IRemoteInterface? = null
+    private var childHandler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,5 +49,30 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             iService = IRemoteInterface.Stub.asInterface(service)
         }
+    }
+
+
+
+    /**
+     * 子线程之间的通信
+     */
+    private fun connChildThread() {
+        Thread(Runnable {
+            Looper.prepare()
+            childHandler = @SuppressLint("HandlerLeak")
+            object : Handler() {
+                override fun handleMessage(msg: Message) {
+                    super.handleMessage(msg)
+                    System.out.println("这个消息是从-->>" + msg.obj + "过来的，在" + "btn的子线程当中" + "中执行的")
+                }
+            }
+            Looper.loop()//开始轮循
+        }).start()
+
+        Thread(Runnable {
+            val msg = childHandler?.obtainMessage()
+            msg?.obj = "btn2当中子线程"
+            childHandler?.sendMessage(msg)
+        }).start()
     }
 }

@@ -1,4 +1,4 @@
-package com.liuhe.customviewpractice
+package com.liuhe.customviewpractice.widget
 
 import android.content.Context
 import android.graphics.*
@@ -15,11 +15,10 @@ import com.liuhe.kotlinutilslib.log
  *
  *
  * Created by liuhe on 20/03/2018.
- *
- * java类的加载过程 静态代码块及静态成员->成员变量->构造函数
- * kotlin 成员变量->主构造函数和init
+
  */
 class CanvasView(context: Context) : View(context) {
+
     val TAG = "CanvasView"
 
     val txt = "liuhe's blog"
@@ -38,11 +37,16 @@ class CanvasView(context: Context) : View(context) {
         init()
     }
 
+
+//   Paint.Style.FILL 填充，实心
+//   Paint.Style.STROKE 描边，空心
+
     private fun init() {
         redPaint = Paint()
         bluePaint = Paint()
         redPaint.apply {
             color = Color.RED
+
             style = Paint.Style.STROKE
             // 抗锯齿（毛刺），开启后，占用内存
             isAntiAlias = true
@@ -50,7 +54,6 @@ class CanvasView(context: Context) : View(context) {
         bluePaint.apply {
             color = Color.BLUE
             style = Paint.Style.FILL_AND_STROKE
-            // 抗锯齿（毛刺），开启后，占用内存
             isAntiAlias = true
         }
     }
