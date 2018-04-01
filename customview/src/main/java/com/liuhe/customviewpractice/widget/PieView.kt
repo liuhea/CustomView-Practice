@@ -220,9 +220,9 @@ class PieView @JvmOverloads constructor(context: Context, attrs: AttributeSet? =
 
         when (action) {
             MotionEvent.ACTION_DOWN -> {
-                // [1]获取点击的位置距当前视图的左边缘距离
+                // [1]获取点击的位置距"当前视图"的左边缘距离
                 var currentX = event.x
-                var currentY = event?.y
+                var currentY = event.y
                 // [2]将点击的x和y转换为以饼状图为圆心的坐标
                 currentX -= circleX / 2
                 currentY -= circleY / 2

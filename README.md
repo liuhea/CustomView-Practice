@@ -70,18 +70,20 @@ Paint Style
        Paint.Style.STROKE 描边，空心
 
 ## onMeasure
+用于测量控件，如果控件还有子控件，则会递归测量子控件。
+如果是ViewGroup,默认值只会测量自身控件。
      
      protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
                     getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
         }
-   MeasureSpec：32位，由两部分组成，由父布局和子控件公共确定的。
-   前两位模式
-    * 未指定:0<<30 UNSPECIFIED 较少使用
-    * 确切的:1<<30 EXACTLY 明确的惠存
-    * 最大的:2<<30 AT_MOST Wrap_content
-    
-   后三十位 控件尺寸
+MeasureSpec：32位，由两部分组成，由父布局和子控件共同决定，是一个组合值，用来控制宽高。
+前两位模式
+* 未指定:0<<30 UNSPECIFIED 较少使用，未限定实际宽高，比如：ScrollView对于子视图的高度的限定
+* 确切的:1<<30 EXACTLY 明确的惠存
+* 最大的:2<<30 AT_MOST Wrap_content
+
+后三十位 控件尺寸
    
 
 ## 其它问题
@@ -102,6 +104,8 @@ Paint Style
 件的尺寸不符合要求，就会重新测量一遍。
 
 2. getX()与getRawX()
+
+getX() 获取当前视图x位置
 
 ```
 override fun onTouchEvent(event: MotionEvent?): Boolean {

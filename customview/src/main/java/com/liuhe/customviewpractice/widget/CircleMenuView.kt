@@ -3,6 +3,7 @@ package com.liuhe.customviewpractice.widget
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -89,6 +90,27 @@ class CircleMenuView @JvmOverloads constructor(context: Context, attributes: Att
         }
     }
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        val action = event?.action
+        when(action){
+            MotionEvent.ACTION_DOWN->{
+                val x = event.x
+                val rawX = event.rawX
+
+                println("CircleMenu-onTouchEvent-x=$x----rawX=$rawX")
+            }
+
+            MotionEvent.ACTION_MOVE->{
+
+            }
+
+            MotionEvent.ACTION_UP->{
+
+            }
+        }
+        return super.onTouchEvent(event)
+    }
 
     fun setData(texts: List<String>, imgIds: List<Int>) {
         for (i in 0 until texts.size) {
