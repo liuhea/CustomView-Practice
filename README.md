@@ -69,7 +69,20 @@ Paint Style
        Paint.Style.FILL 填充，实心
        Paint.Style.STROKE 描边，空心
 
-
+## onMeasure
+     
+     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+                    getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+        }
+   MeasureSpec：32位，由两部分组成，由父布局和子控件公共确定的。
+   前两位模式
+    * 未指定:0<<30 UNSPECIFIED 较少使用
+    * 确切的:1<<30 EXACTLY 明确的惠存
+    * 最大的:2<<30 AT_MOST Wrap_content
+    
+   后三十位 控件尺寸
+   
 
 ## 其它问题
 1. 自定义控件中的onMeasure和onLayout执行两次？
@@ -137,3 +150,5 @@ class PieView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : View(
     View执行requestLayout()方法，会向上递归到顶级父View中，再执行这个顶级父View的requestLayout，所以其他View的onMeasure，onLayout也可能会被调用。
     
     进行View更新时，若仅View的显示内容发生改变且新的内容不影响View的大小、位置，则只需调用invalidate方法；若View的宽高、位置发生改变且显示内容不变，只需调用requestLayout方法；若两者均发生改变，则需调用两者，按照View的绘制流程，推荐先调用requestLayout方法再调用invalidate方法。
+    
+    

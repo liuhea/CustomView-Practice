@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.liuhe.kotlinutilslib.log
 import com.liuhe.customviewpractice.bean.PieData
+import kotlinx.android.synthetic.main.activity_circle_menu.*
 import kotlinx.android.synthetic.main.activity_pie.*
 
 
@@ -11,9 +12,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_canvas)
+        setContentView(R.layout.activity_circle_menu)
         "onCreate()执行完毕".log()
         mockPieData()
+
+        mockCircleMenuData()
+    }
+
+    /**
+     * 模拟圆形按钮数据
+     */
+    private fun mockCircleMenuData() {
+        val texts = listOf("安全中心 ", "特色服务", "投资理财",
+                "转账汇款", "我的账户", "信用卡")
+        val imgIds = listOf(R.drawable.home_mbank_1_normal,
+                R.drawable.home_mbank_2_normal, R.drawable.home_mbank_3_normal,
+                R.drawable.home_mbank_4_normal, R.drawable.home_mbank_5_normal,
+                R.drawable.home_mbank_6_normal)
+        circle_menu?.setData(texts,imgIds)
     }
 
     /**
@@ -24,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val colors = listOf(0xFFCCFF00, 0xFF6495ED, 0xFFE32636, 0xFF800000, 0xFF808000, 0xFFFF8C69, 0xFF808080,
                 0xFFE6B800, 0xFF7CFC00)
         for (i in 0 until colors.size) {
-            pies.add(PieData((i+1).toFloat(), colors[i]))
+            pies.add(PieData((i + 1).toFloat(), colors[i]))
         }
         pie_main?.setData(pies)
     }
