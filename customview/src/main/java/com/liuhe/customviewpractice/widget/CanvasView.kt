@@ -100,6 +100,20 @@ class CanvasView(context: Context) : View(context) {
 
         measureText()
 
+        drawGrid(canvas)
+
+    }
+
+    private fun drawGrid(canvas: Canvas?) {
+        //长宽间隔
+        var space = 100f
+        var spaceX = 0f
+
+        for (i in 0..1000) {
+            canvas?.drawLine(0f, spaceX, width.toFloat(), spaceX, redPaint)
+            canvas?.drawLine(spaceX, 0f, spaceX, height.toFloat(),bluePaint)
+            spaceX += space
+        }
     }
 
     /**

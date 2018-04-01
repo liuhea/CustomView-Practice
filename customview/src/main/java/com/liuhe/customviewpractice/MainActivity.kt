@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.liuhe.kotlinutilslib.log
 import com.liuhe.customviewpractice.bean.PieData
-import com.liuhe.customviewpractice.widget.PieView
 import kotlinx.android.synthetic.main.activity_pie.*
 
 
@@ -12,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pie)
+        setContentView(R.layout.activity_canvas)
         "onCreate()执行完毕".log()
         mockPieData()
     }
