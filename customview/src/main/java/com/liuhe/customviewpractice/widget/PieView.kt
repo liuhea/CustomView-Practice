@@ -138,12 +138,15 @@ class PieView @JvmOverloads constructor(context: Context, attrs: AttributeSet? =
             path.moveTo(0f, 0f)
             // 绘制扇形，划过的角度-1，起始角度+1，保证每个扇形之间留有一定空隙
 
-            if (pies!!.indexOf(it)==clickPosition){
+            if (pies!!.indexOf(it) == clickPosition) {
                 path.arcTo(touchRectF, startAngle, sweepAngle - 0.3f)
-            }else{
+//                canvas?.drawArc(touchRectF, startAngle, sweepAngle - 0.3f, true, paint)
+
+            } else {
                 path.arcTo(rectF, startAngle, sweepAngle - 0.3f)
+//                canvas?.drawArc(rectF, startAngle, sweepAngle - 0.3f, true, paint)
             }
-            canvas?.drawPath(path, paint)
+//            canvas?.drawPath(path, paint)
 
             drawLines(startAngle, sweepAngle, canvas)
 
