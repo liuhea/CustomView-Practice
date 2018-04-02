@@ -1,0 +1,99 @@
+
+[爱奇艺面试题来源网络](https://juejin.im/post/5ab7a9cd6fb9a028c812d24b?utm_source=gold_browser_extension#heading-22)
+
+
+一面：
+* 聊聊RecyclerView，动画，缓存，数据绑定底层是如何实现的。
+    
+* 聊了聊我的开源项目实现原理
+* View在屏幕中的移动底层是如何实现的
+    
+    onDraw() invalidate() 
+    
+    
+* Binder跟Socket之间的区别，什么时候用哪一个，Binder的底层实现
+* Activity,Window跟View之间的关系
+   
+    Activity是存放View对象的容器，也是界面的载体。
+    View是一个个视图的对象，实现了KeyEvent.Callback和Drawable.Callback
+    Window是一个抽象类，是一个顶层的窗口，它的唯一实例是PhoneWindow，它提供标准的用户界面策略，如背景、标题、区域和默认按键处理等。
+   
+    Activity加载时，会执行Activity中的attach方法，对window对象进行初始化，Activity中的SetContentView()方法,其实调用了Window的SetContentView方法，
+    也就是View通过Activity最终添加到了Window上面。
+    
+* setContentView都干了啥
+     
+    Activity会调用PhoneWindow的setContentView()将layout布局添加到DecorView上，而此时的DecorView就是那个最底层的View。
+    然后通过LayoutInflater.infalte()方法加载布局生成View对象并通过addView()方法添加到Window上，（一层一层的叠加到Window上）。
+    所以，Activity其实不是显示视图，Window才是真正的显示视图。
+
+* Activity的启动模式
+    
+* MVC跟MVP之间的区别
+* 算法：将一个有序数组去重得到一个新数组(空间复杂度为O(N))
+    
+
+二面：
+* LruCache底层实现
+    内部存在一个LinkedHashMap和maxSize,把最近使用的对象的强引用存储在LinkedHashMap中，给出来put和get方法
+     //将LinkedHashMap的accessOrder设置为true来实现LRU的
+     this.map = new LinkedHashMap<K, V>(0, 0.75f, true);
+     起始容量为0，加载因子0.75，表示容量达到最大容量的75%时会把内存增加一般。
+     accessOrder 表示访问元素的排序方式，true表示按照访问顺序排序，false表示按照插入的顺序排序。
+     
+     
+    
+* HashMap的hash算法  
+    HashMap实际上是一个数组和链表的结合体（链表散列）  
+    
+    
+* Bitmap在decode的时候申请的内存如何复用，释放时机
+* 注解如何实现一个findViewById
+* Android是如何学习的
+* synchronized关键字的类锁对象锁，如何保证线程安全？
+* 重入锁跟synchronized关键字之间的区别
+* 除了notify还有什么别的方式可以唤醒线程
+     等待唤醒机制就是用于解决线程间通信的问题的，使用到的3个方法的含义如下：
+     wait：告诉当前线程放弃执行权，并放弃监视器（锁）并进入阻塞状态，直到其他线程持有获得执行权，并持有了相同的监视器（锁）并调用notify为止。
+     notify：唤醒持有同一个监视器（锁）中调用wait的第一个线程，例如，餐馆有空位置后，等候就餐最久的顾客最先入座。注意：被唤醒的线程是进入了可运行状态。等待cpu执行权。
+     notifyAll：唤醒持有同一监视器中调用wait的所有的线程。
+     
+     
+* 说说你对Context的理解
+
+三面：
+* ListView的adapter是什么adapter，如何复用。
+    
+    ``` 
+       interface Adapter{}
+        |--interface ListAdapter
+            |--abstract BaseAdapter
+                |--SimpleAdapter
+                |--ArrayAdapter
+                |--CursorAdapter
+    ```
+    通过缓存contentView+ViewHolder
+    
+    
+    
+    
+* RecyclerView如何绘制，布局？
+* 算法：如何从1T的无序数组(长度为n)里面找出前k大的数据，复杂度要求为O(logN)
+* 由A启动BActivity，A为栈内复用模式，B为标准模式，然后再次启动A或者杀死B，说说A，B的生命周期变化，为什么
+* 写一个链表和快排？
+
+
+其它
+
+* 什么是时间复杂度和空间复杂度?
+    算法复杂度分为时间复杂度和空间复杂度，用来标识该算法所需的计算机资源。时间复杂度是执行这个算法所需要的计算工作量；空间复杂度是指执行这个算法所需要的内存空间。
+    在时间频率中，n称为问题的规模，当n不断变化时，他所呈现的规律，我们称为时间复杂度。
+    
+          最差时间分析  平均时间复杂度 稳定度     空间复杂度   
+    冒泡排序    O(n2)   O(n2)       稳定        O(1)  
+    快速排序    O(n2)   O(n*log2n)  不稳定  O(log2n)~O(n)     
+    选择排序    O(n2)   O(n2)       稳定      O(1)    
+    二叉树排序  O(n2) O(n*log2n)    不稳定     O(n)     
+    插入排序    O(n2)   O(n2)       稳定      O(1)    
+    堆排序 O(n*log2n) O(n*log2n)   不稳定     O(1)    
+    希尔排序    O        O          不稳定     O(1)

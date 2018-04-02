@@ -34,7 +34,6 @@ ext {
     targetSdkVersion = 26
     compileSdkVersion = 26
 
-
     // App dependencies
     supportLibraryVersion = '26.1.0'
     daggerVersion = '2.11'
