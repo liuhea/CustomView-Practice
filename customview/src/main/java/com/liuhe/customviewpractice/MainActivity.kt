@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pie)
+        setContentView(R.layout.activity_circle_menu)
         "onCreate()执行完毕".log()
         mockPieData()
 

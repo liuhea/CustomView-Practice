@@ -3,12 +3,14 @@ package com.liuhe.customviewpractice.widget
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.liuhe.customviewpractice.R
+import com.liuhe.customviewpractice.utils.CircleUtils
 
 /**
  * 自定义银行
@@ -16,8 +18,9 @@ import com.liuhe.customviewpractice.R
  * @date 2018-04-01
  */
 class CircleMenuView @JvmOverloads constructor(context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0) : ViewGroup(context, attributes, defStyleAttr) {
+    val TAG = "CircleMenu"
 
-    private var startAngle = 0
+    private var startAngle = 0f
     // 圆形直径
     private var finalD = 600
 
@@ -90,26 +93,45 @@ class CircleMenuView @JvmOverloads constructor(context: Context, attributes: Att
         }
     }
 
+    // ACTION_DOWN时，保存的点
+    private var lastX = 0f
+    private var lastY = 0f
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
+        val x = event?.x
+        val y = event?.y
         val action = event?.action
-        when(action){
-            MotionEvent.ACTION_DOWN->{
-                val x = event.x
-                val rawX = event.rawX
-
-                println("CircleMenu-onTouchEvent-x=$x----rawX=$rawX")
+        when (action) {
+            MotionEvent.ACTION_DOWN -> {
+                Log.d(TAG, "ACTION_DOWN -（x，y)=($x,$y)")
+                lastX = x!!
+                lastY = y!!
             }
 
-            MotionEvent.ACTION_MOVE->{
+            MotionEvent.ACTION_MOVE -> {
+                Log.d(TAG, "ACTION_MOVE-（x，y)=($x,$y)")
+                var start = CircleUtils.getAngle(lastX, lastY, finalD)
+                var end = CircleUtils.getAngle(x!!, y!!, finalD)
+                var angle = if (CircleUtils.getQuadrant(x, y, finalD) == 1 || CircleUtils.getQuadrant(x, y, finalD) == 4) {
+                    end - start
+                } else {
+                    start - end
+                }
+                startAngle += angle
+                // 让界面重新布局和绘制
+                requestLayout()
 
+                //滑动停止，但是尚未松手的点。
+                lastX = x
+                lastY = y
             }
 
-            MotionEvent.ACTION_UP->{
-
+            MotionEvent.ACTION_UP -> {
+                Log.d(TAG, "ACTION_UP-（x，y)=($x,$y)")
             }
         }
-        return super.onTouchEvent(event)
+        // true表示当前控件想要处理事件，所有的MotionEvent事件都交给自己处理
+        return true
     }
 
     fun setData(texts: List<String>, imgIds: List<Int>) {
