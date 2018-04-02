@@ -113,7 +113,9 @@ class CircleMenuView @JvmOverloads constructor(context: Context, attributes: Att
                 Log.d(TAG, "ACTION_MOVE-（lastX，lastX)=($lastX,$lastX)")
                 var start = CircleUtils.getAngle(lastX, lastY, finalD)
                 var end = CircleUtils.getAngle(x!!, y!!, finalD)
-                // 判断点击的点所处的象限，如果是1.4象限，角度值为正数，否则为负数。
+
+                // 判断点击的点所处的象限，如果是1.4象限，角度值为正数，否则为负数。？？
+                // 顺时针  4象限 ：0~90， 3象限：90~0 2象限：0~-90 1象限：-90~0
                 var angle = if (CircleUtils.getQuadrant(x, y, finalD) == 1 || CircleUtils.getQuadrant(x, y, finalD) == 4) {
                     end - start
                 } else {
