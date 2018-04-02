@@ -146,7 +146,7 @@ class PieView @JvmOverloads constructor(context: Context, attrs: AttributeSet? =
                 path.arcTo(rectF, startAngle, sweepAngle - 0.3f)
 //                canvas?.drawArc(rectF, startAngle, sweepAngle - 0.3f, true, paint)
             }
-//            canvas?.drawPath(path, paint)
+            canvas?.drawPath(path, paint)
 
             drawLines(startAngle, sweepAngle, canvas)
 
@@ -235,14 +235,14 @@ class PieView @JvmOverloads constructor(context: Context, attrs: AttributeSet? =
                     try {
                         // 说明是一个有限区域，查找触摸角度是否位于起始角度集合中
                         // 参数2在参数1集合中的索引
-                        // 未找到，返回-（和搜索的值附近的大于搜索值得正确值的索引值+1）
+                        // 未找到，返回-（在搜索的值附近的大于搜索值得正确值的索引值+1）
                         // {1,2,3}
                         // 搜索1，返回0
-                        // 所有1.2，返回-（1+1）-2??
+                        // 所有1.2，返回-（1+1）
                         val binarySearch = Arrays.binarySearch(startAngles, touchAngle)
                         // 未找到，则返回
                         clickPosition = if (binarySearch < 0) {
-                            -binarySearch - 1 - 1
+                            -binarySearch - 1 - 1 // 以10 20度为例，搜索值为15，我们需要在10的范围内的索引。所以，我们需要-1，为了让索引从0开始，再减1
                         } else {
                             binarySearch
                         }
