@@ -6,17 +6,27 @@ import com.liuhe.kotlinutilslib.log
 import com.liuhe.customviewpractice.bean.PieData
 import kotlinx.android.synthetic.main.activity_circle_menu.*
 import kotlinx.android.synthetic.main.activity_pie.*
+import kotlinx.android.synthetic.main.activity_switch.*
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_circle_menu)
+        setContentView(R.layout.activity_switch)
         "onCreate()执行完毕".log()
         mockPieData()
 
         mockCircleMenuData()
+
+        mockSwitch()
+    }
+
+    private fun mockSwitch() {
+
+        switch_main?.setOnClickListener {
+            switch_main.toggle()
+        }
     }
 
     /**
@@ -29,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.home_mbank_2_normal, R.drawable.home_mbank_3_normal,
                 R.drawable.home_mbank_4_normal, R.drawable.home_mbank_5_normal,
                 R.drawable.home_mbank_6_normal)
-        circle_menu?.setData(texts,imgIds)
+        circle_menu?.setData(texts, imgIds)
     }
 
     /**
