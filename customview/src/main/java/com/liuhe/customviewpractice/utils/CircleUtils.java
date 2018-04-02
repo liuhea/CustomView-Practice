@@ -1,5 +1,7 @@
 package com.liuhe.customviewpractice.utils;
 
+import android.util.Log;
+
 /**
  * @author liuhe
  * @date 2018-04-02
@@ -36,8 +38,11 @@ public class CircleUtils {
 
 
         if (tempX >= 0) {
+            Log.d("CircleUtils", (tempY >= 0 ? 4 : 1) + "象限");
             return tempY >= 0 ? 4 : 1;
+
         } else {
+            Log.d("CircleUtils", (tempY >= 0 ? 3 : 2) + "象限");
             return tempY > 0 ? 3 : 2;
         }
     }

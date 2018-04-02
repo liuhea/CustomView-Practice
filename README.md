@@ -156,3 +156,13 @@ class PieView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : View(
     进行View更新时，若仅View的显示内容发生改变且新的内容不影响View的大小、位置，则只需调用invalidate方法；若View的宽高、位置发生改变且显示内容不变，只需调用requestLayout方法；若两者均发生改变，则需调用两者，按照View的绘制流程，推荐先调用requestLayout方法再调用invalidate方法。
     
     
+9. 弧度角度
+    长度为半径长的弧，所对的圆心角是 1 弧度（Radian），用符号rad表示。
+    
+    
+    360度= 2π rad
+    180度= π rad
+    1度 =（π / 180）rad ≈ 0.01745 rad
+    1弧度 =（180 /π）o ≈ 57.30 o
+    
+    α 度的角 =  α ·（π / 180）rad

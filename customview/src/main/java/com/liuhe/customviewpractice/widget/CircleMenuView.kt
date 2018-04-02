@@ -110,13 +110,18 @@ class CircleMenuView @JvmOverloads constructor(context: Context, attributes: Att
 
             MotionEvent.ACTION_MOVE -> {
                 Log.d(TAG, "ACTION_MOVE-（x，y)=($x,$y)")
+                Log.d(TAG, "ACTION_MOVE-（lastX，lastX)=($lastX,$lastX)")
                 var start = CircleUtils.getAngle(lastX, lastY, finalD)
                 var end = CircleUtils.getAngle(x!!, y!!, finalD)
+                // 判断点击的点所处的象限，如果是1.4象限，角度值为正数，否则为负数。
                 var angle = if (CircleUtils.getQuadrant(x, y, finalD) == 1 || CircleUtils.getQuadrant(x, y, finalD) == 4) {
                     end - start
                 } else {
                     start - end
                 }
+
+                Log.d(TAG, "ACTION_MOVE-start-->end=($start-->$end)")
+
                 startAngle += angle
                 // 让界面重新布局和绘制
                 requestLayout()
