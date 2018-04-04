@@ -19,7 +19,4 @@ fun isConnected(context: Context): Boolean {
     val cm = context.applicationContext.getSystemService(Activity.CONNECTIVITY_SERVICE) as ConnectivityManager
     val info = cm?.activeNetworkInfo
     return info != null && info!!.isConnected
-
-
-
 }
