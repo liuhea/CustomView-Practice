@@ -1,4 +1,4 @@
-include ':customview', ':dagger2demo', ':aiqiyidemo',
+include ':customview', ':dagger2demo', ':aiqiyidemo', ':jnidemo',
         ':bigdrawableloaddemo',
         ':kotlinutilslib',
 //        ':aidlservice',
