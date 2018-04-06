@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int loginCode = -1;
+                int loginCode;
                 try {
                     loginCode = dataProvider.login(Integer.valueOf(name.getText().toString()), Integer.valueOf(pwd.getText().toString()));
                 } catch (Exception e) {
                     e.printStackTrace();
+                    loginCode = -1;
                 }
 
                 if (loginCode > 0) {
