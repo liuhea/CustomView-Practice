@@ -20,6 +20,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            // fix  java.lang.UnsatisfiedLinkError:dalvik.system.PathClassLoade...couldn't find "libhello.so"
+            jniLibs.srcDirs = ['src/main/libs']
+
+            // fix Error: Your project contains C++ files but it is not using a supported native build system
+            jni.srcDirs = []
+        }
+    }
 }
 
 dependencies {

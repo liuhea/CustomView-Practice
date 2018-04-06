@@ -33,7 +33,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int loginCode = dataProvider.login(Integer.valueOf(name.getText().toString()), Integer.valueOf(pwd.getText().toString()));
+
+                int loginCode = -1;
+                try {
+                    loginCode = dataProvider.login(Integer.valueOf(name.getText().toString()), Integer.valueOf(pwd.getText().toString()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 if (loginCode > 0) {
                     Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 } else {
