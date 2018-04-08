@@ -1,6 +1,9 @@
 package com.liuhe.aiqiyidemo;
 
 /**
+ * 快速排序——JAVA实现（图文并茂）
+ * https://blog.csdn.net/as02446418/article/details/47395867
+ *
  * @author liuhe
  * @date 2018-04-09
  */
