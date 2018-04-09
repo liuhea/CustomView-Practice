@@ -1,13 +1,16 @@
 package com.liuhe.aiqiyidemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.liuhe.aiqiyidemo.bindview.BindView;
 import com.liuhe.aiqiyidemo.bindview.BindViewUtils;
+import com.liuhe.aiqiyidemo.launchmode.AActivity;
 
 /**
  * @author liuhe
@@ -26,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
         BindViewUtils.bindView(this);
 
         txt.setText("BindView Success");
+        txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AActivity.class);
+                startActivity(intent);
+            }
+        });
 
         int[] array = new int[]{3, 7, 2, 9, 1, 4, 6, 8, 10, 5};
 
