@@ -19,7 +19,7 @@ class BActivity : AppCompatActivity() {
         txt_launch.text = "BActivity"
 
         txt_launch.setOnClickListener {
-            val intent = Intent(this@BActivity, CActivity::class.java)
+            val intent = Intent(this@BActivity, AActivity::class.java)
             startActivity(intent)
         }
     }

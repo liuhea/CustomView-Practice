@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_viewgroup)
+        setContentView(R.layout.activity_rcy)
         "onCreate()执行完毕".log()
+
         mockPieData()
 
         mockCircleMenuData()
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         mockRcy()
     }
+
 
     private fun mockDragCircle() {
         drag_circle?.setText(2)

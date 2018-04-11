@@ -1,5 +1,7 @@
 package com.liuhe.customviewpractice.widget
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.animation.OvershootInterpolator
 import com.liuhe.customviewpractice.utils.GeometryUtil
 import com.liuhe.customviewpractice.utils.getStatusBarHeight
+
 
 /**
  * 拖拽圆
@@ -35,7 +38,7 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * 固定圆半径
      */
-    private var stableCircleRadius = 20f
+    private var stableCircleRadius = 30f
 
     /**
      * 拖拽圆圆心
@@ -44,7 +47,7 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
     /**
      * 拖拽圆半径
      */
-    private var dragCircleRadius = 30f
+    private var dragCircleRadius = 40f
 
     /**
      * 贝塞尔曲线参考点
@@ -73,6 +76,8 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
      * 绘制文本
      */
     private var text: Int = 0
+
+    private var listener: OnDragViewChangeListener? = null
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -165,10 +170,8 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                // 重置状态，便于调试
-//                isOutRange = false
-//                isDisappear = false
-
+                isDisappear = false
+                isOutRange = false
                 // event.getX() 点击的点距离当前自定义控件左边缘的距离
                 // event.getRawX() 点击的点距离屏幕左边缘的距离
                 var downX = event.rawX
@@ -198,8 +201,11 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
                     // 判断up的时候是否在最大范围之外
                     if (distance > maxDragDistance) {
                         isDisappear = true
+                        listener?.onDisappear()
                     } else {
                         dragCircleCenter.set(stableCircleCenter.x, stableCircleCenter.y)
+                        //做重置操作
+                        listener?.onReset()
                     }
                 } else {
                     // move时候未超出最大范围，up时候也在最大范围内；
@@ -215,6 +221,13 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
                         dragCircleCenter = GeometryUtil.getPointByPercent(tempDragCenter, stableCircleCenter, animatedFraction)
                         invalidate()
                     }
+                    va.addListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            //做重置操作
+                            listener?.onReset()
+                        }
+                    })
                     // 动画插值器：改变动画的执行效果；动画执行到目标点之后超出一段距离，然后回到原位
                     va.interpolator = OvershootInterpolator()
                     va.duration = 100
@@ -224,5 +237,21 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
         return true
+    }
+
+    fun setOnDragViewChangeListener(listener: OnDragViewChangeListener) {
+        this.listener = listener
+    }
+
+    interface OnDragViewChangeListener {
+        /**
+         * GooView的消失处理
+         */
+        fun onDisappear()
+
+        /**
+         * GooView重置处理
+         */
+        fun onReset()
     }
 }

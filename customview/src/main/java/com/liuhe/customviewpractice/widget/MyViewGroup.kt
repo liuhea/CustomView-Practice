@@ -35,7 +35,7 @@ class MyViewGroup @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 setImageResource(R.mipmap.ic_launcher)
                 setOnTouchListener { _, _ ->
                     "I'm from ImageView".log()
-                    true
+                    false
                 }
             })
         }
@@ -45,23 +45,23 @@ class MyViewGroup @JvmOverloads constructor(context: Context, attrs: AttributeSe
     // 当前控件对应的边的左上右下
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         // 获取对应位置的孩子视图
-//        val childAt = this.getChildAt(0)
+        val childAt = this.getChildAt(0)
 //        // 摆放孩子视图，layout方法可以用来改变图形的大小
-//        childAt.layout(0, 0, 100, 100)
+        childAt.layout(0, 0, 300, 300)
 
-        // 正三角
-        var childIndex = 0
-        var top = 0
-        for (i in 1..3) {
-            println("MyViewGroup-->i=$i")
-            for (j in 0 until i) {
-                println("MyViewGroup-->j=$j")
-                val child = this.getChildAt(childIndex)
-                child.layout(100 * j, top, 100 * (j + 1), top + 100)
-                childIndex++
-            }
-            top += 100
-        }
+//        // 正三角
+//        var childIndex = 0
+//        var top = 0
+//        for (i in 1..3) {
+//            println("MyViewGroup-->i=$i")
+//            for (j in 0 until i) {
+//                println("MyViewGroup-->j=$j")
+//                val child = this.getChildAt(childIndex)
+//                child.layout(100 * j, top, 100 * (j + 1), top + 100)
+//                childIndex++
+//            }
+//            top += 100
+//        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
