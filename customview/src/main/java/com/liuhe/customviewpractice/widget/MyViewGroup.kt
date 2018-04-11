@@ -12,8 +12,17 @@ import com.liuhe.kotlinutilslib.log
  *  自定义ViewGroup
  *
  *  源码可知：
+ *
+ *  down事件确定target,递归调用dispatchTouchEvent()
+ *
+ *  情况1.
  *      ViewGroup 和 子View onTouchEvent同时返回true,子View处理事件，父View没有机会处理。
  *      onTouchEvent返回true,仅仅表示想要处理事件，如果多个视图均返回true,则事件优先交给子视图。
+ *   情况2：
+ *      ViewGroup迫切需要处理事件，即onInterceptTouchEvent()返回true，而子View即使onTouchEvent返回true,也不管用。
+ *      ViewGroup处理事件。
+ *
+ *  情况3：即使ViewGroup使用了onInterceptTouchEvent返回true,但是子view使用了requestDisallowInterceptTouchEvent(),子view成为target,处理事件
  *
  * @author liuhe
  * @date 2018-04-01
