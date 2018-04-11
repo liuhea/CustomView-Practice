@@ -152,8 +152,8 @@ public class LargeImageView extends View {
         int imageWidth = mImageWidth;
         int imageHeight = mImageHeight;
 
-        mRect.left = imageWidth / 2 - width / 2;
-        mRect.top = imageHeight / 2 - height / 2;
+        mRect.left = 0;
+        mRect.top = 0;
         mRect.right = mRect.left + width;
         mRect.bottom = mRect.top + height;
     }

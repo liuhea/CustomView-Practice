@@ -19,7 +19,7 @@ class CActivity : AppCompatActivity() {
 
         txt_launch.setOnClickListener {
             val intent = Intent(this@CActivity, AActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.flags = Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
             startActivity(intent)
         }
     }
