@@ -31,7 +31,7 @@ class MsgAdapter(private val context: Context, private val msgList: List<Msg>) :
     override fun onBindViewHolder(holder: MyViewHolder?, position: Int) {
         holder?.titleView?.text = msgList[position].title
         val unReadMsgCount = msgList[position].unReadMsgCount
-        if (unReadMsgCount == 0) {
+        if (position == 0) {
             holder?.unReadMsgCountView?.visibility = View.INVISIBLE
         } else {
             holder?.unReadMsgCountView?.visibility = View.VISIBLE
