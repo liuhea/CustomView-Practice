@@ -2,10 +2,15 @@ package com.liuhe.customviewpractice
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import com.liuhe.customviewpractice.adapter.MsgAdapter
+import com.liuhe.customviewpractice.bean.Msg
 import com.liuhe.kotlinutilslib.log
 import com.liuhe.customviewpractice.bean.PieData
 import kotlinx.android.synthetic.main.activity_circle_menu.*
+import kotlinx.android.synthetic.main.activity_drag_circle.*
 import kotlinx.android.synthetic.main.activity_pie.*
+import kotlinx.android.synthetic.main.activity_rcy.*
 import kotlinx.android.synthetic.main.activity_switch.*
 
 
@@ -20,6 +25,23 @@ class MainActivity : AppCompatActivity() {
         mockCircleMenuData()
 
         mockSwitch()
+
+        mockDragCircle()
+
+        mockRcy()
+    }
+
+    private fun mockDragCircle() {
+        drag_circle?.setText(2)
+    }
+
+    private fun mockRcy() {
+        var rcyData = mutableListOf<Msg>()
+        for (i in 0..20) {
+            rcyData.add(Msg("标题$i", i))
+        }
+        rcy_main?.layoutManager = LinearLayoutManager(this)
+        rcy_main?.adapter = MsgAdapter(this, rcyData)
     }
 
     private fun mockSwitch() {

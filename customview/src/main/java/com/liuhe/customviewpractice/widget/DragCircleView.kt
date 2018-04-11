@@ -22,6 +22,12 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
         style = Paint.Style.FILL
         flags = Paint.ANTI_ALIAS_FLAG
     }
+    private var textPaint: Paint = Paint().apply {
+        color = Color.WHITE
+        textSize = 35f
+        style = Paint.Style.FILL
+        flags = Paint.ANTI_ALIAS_FLAG
+    }
     /**
      * 固定圆圆心
      */
@@ -63,7 +69,10 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
      * 是否全部消失
      */
     private var isDisappear: Boolean = false
-
+    /**
+     * 绘制文本
+     */
+    private var text: Int = 0
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -76,7 +85,7 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
         val distance = GeometryUtil.getDistanceBetween2Points(dragCircleCenter, stableCircleCenter)
         val percent = distance / maxDragDistance
 
-        var tempRadius = GeometryUtil.evaluateValue(percent,stableCircleRadius, dragCircleRadius)
+        var tempRadius = GeometryUtil.evaluateValue(percent, stableCircleRadius, dragCircleRadius)
         if (tempRadius < minStableRadius) {
             tempRadius = minStableRadius
         }
@@ -117,10 +126,30 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
                 canvas?.drawCircle(stableCircleCenter.x, stableCircleCenter.y, tempRadius, paint)
             }
             canvas?.drawCircle(dragCircleCenter.x, dragCircleCenter.y, dragCircleRadius, paint)
+            drawText(canvas)
         }
         canvas?.restore()
     }
 
+    private fun drawText(canvas: Canvas?) {
+        if (text <= 0) {
+            return
+        }
+//        val measureText = textPaint.measureText(text.toString())
+        // 画图可以看出
+        // x: 拖拽圆圆心横坐标-文本宽度/2
+        // y: 拖拽圆圆心纵坐标+文本高度/2
+        // 文本可以理解为在画布上一个矩形内的。
+        val rect = Rect()
+        textPaint.getTextBounds(text.toString(), 0, text.toString().length, rect)
+        var x = dragCircleCenter.x - (rect.right - rect.left) / 2
+        var y = dragCircleCenter.y + (rect.bottom - rect.top) / 2
+        canvas?.drawText(text.toString(), x, y, textPaint)
+    }
+
+    fun setText(num: Int) {
+        text = num
+    }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {

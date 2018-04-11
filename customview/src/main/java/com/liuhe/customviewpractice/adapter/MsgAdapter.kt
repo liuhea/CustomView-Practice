@@ -16,7 +16,8 @@ import com.liuhe.customviewpractice.bean.Msg
  */
 class MsgAdapter(private val context: Context, private val msgList: List<Msg>) : RecyclerView.Adapter<MsgAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_rcy, parent, false))
+        val view = LayoutInflater.from(context).inflate(R.layout.item_rcy, parent, false)
+        return MyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -34,9 +35,9 @@ class MsgAdapter(private val context: Context, private val msgList: List<Msg>) :
         }
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-         var titleView: TextView=itemView.findViewById(R.id.tv_title)
-         var unReadMsgCountView: TextView =itemView.findViewById(R.id.tv_unReadMsgCount)
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var titleView: TextView = itemView.findViewById(R.id.tv_title)
+        var unReadMsgCountView: TextView = itemView.findViewById(R.id.tv_unReadMsgCount)
     }
 }
 
