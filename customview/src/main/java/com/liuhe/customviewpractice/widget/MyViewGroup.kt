@@ -2,12 +2,19 @@ package com.liuhe.customviewpractice.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.liuhe.customviewpractice.R
+import com.liuhe.kotlinutilslib.log
 
 /**
  *  自定义ViewGroup
+ *
+ *  源码可知：
+ *      ViewGroup 和 子View onTouchEvent同时返回true,子View处理事件，父View没有机会处理。
+ *      onTouchEvent返回true,仅仅表示想要处理事件，如果多个视图均返回true,则事件优先交给子视图。
+ *
  * @author liuhe
  * @date 2018-04-01
  */
@@ -15,7 +22,13 @@ class MyViewGroup @JvmOverloads constructor(context: Context, attrs: AttributeSe
     init {
 
         for (i in 0..5) {
-            addView(ImageView(getContext()).apply { setImageResource(R.mipmap.ic_launcher) })
+            addView(ImageView(getContext()).apply {
+                setImageResource(R.mipmap.ic_launcher)
+                setOnTouchListener { _, _ ->
+                    "I'm from ImageView".log()
+                    true
+                }
+            })
         }
     }
 
@@ -35,10 +48,15 @@ class MyViewGroup @JvmOverloads constructor(context: Context, attrs: AttributeSe
             for (j in 0 until i) {
                 println("MyViewGroup-->j=$j")
                 val child = this.getChildAt(childIndex)
-                child.layout(50 * j, top, 50 * (j + 1), top + 50)
+                child.layout(100 * j, top, 100 * (j + 1), top + 100)
                 childIndex++
             }
-            top += 50
+            top += 100
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        "i'm form MyViewGroup".log()
+        return true
     }
 }

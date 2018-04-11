@@ -147,16 +147,28 @@ class DragCircleView @JvmOverloads constructor(context: Context, attrs: Attribut
         canvas?.drawText(text.toString(), x, y, textPaint)
     }
 
+    /**
+     * 设置text
+     */
     fun setText(num: Int) {
         text = num
+    }
+
+    /**
+     * 设置固定圆和拖拽圆坐标
+     */
+    fun setDragViewPosition(x: Float, y: Float) {
+        dragCircleCenter.set(x, y)
+        stableCircleCenter.set(x, y)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 // 重置状态，便于调试
-                isOutRange = false
-                isDisappear = false
+//                isOutRange = false
+//                isDisappear = false
+
                 // event.getX() 点击的点距离当前自定义控件左边缘的距离
                 // event.getRawX() 点击的点距离屏幕左边缘的距离
                 var downX = event.rawX
