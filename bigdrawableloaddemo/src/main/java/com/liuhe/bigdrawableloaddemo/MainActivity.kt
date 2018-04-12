@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import com.liuhe.kotlinutilslib.log
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
+import com.liuhe.kotlinutilslib.toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val maxMemory = (Runtime.getRuntime().maxMemory() / (1024 * 1024)).toInt()
         txt_main_maxsize.text = "MaxMemorySize=$maxMemory M"
+        toast(Utils.getMaxHeapSize(this).second.toString())
 
         checkImg()
         checkImageView()
