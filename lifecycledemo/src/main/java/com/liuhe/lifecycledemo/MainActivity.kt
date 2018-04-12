@@ -1,18 +1,26 @@
 package com.liuhe.lifecycledemo
 
-import android.app.DialogFragment
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LifecycleRegistry
+import android.content.Intent
+import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import com.liuhe.kotlinutilslib.log
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 /**
  * 下拉状态栏是不是影响activity的生命周期?
  * 不会
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LifecycleOwner {
+
+    private var mLifecycleRegistry: LifecycleRegistry? = null
+
+    override fun getLifecycle(): LifecycleRegistry {
+        return mLifecycleRegistry!!
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +37,23 @@ class MainActivity : AppCompatActivity() {
 
             loginDialog.show(supportFragmentManager, MainActivity::class.java.simpleName)
         })
+
+        mLifecycleRegistry = LifecycleRegistry(this)
+        mLifecycleRegistry?.markState(Lifecycle.State.CREATED)
     }
 
     override fun onStart() {
         super.onStart()
+        mLifecycleRegistry?.markState(Lifecycle.State.STARTED)
+
         "MainActivity->onStart".log()
 
     }
 
     override fun onResume() {
         super.onResume()
+        mLifecycleRegistry?.markState(Lifecycle.State.RESUMED)
+
         "MainActivity->onResume".log()
 
     }
@@ -57,7 +72,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mLifecycleRegistry?.markState(Lifecycle.State.DESTROYED)
+
         "MainActivity->onDestroy".log()
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        "MainActivity->onNewIntent-----".log()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        "MainActivity->onRestart-------".log()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        "MainActivity->onConfigurationChanged-------".log()
 
     }
 }
