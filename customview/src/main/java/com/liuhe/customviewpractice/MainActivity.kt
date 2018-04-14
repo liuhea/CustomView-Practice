@@ -10,6 +10,7 @@ import com.liuhe.customviewpractice.bean.PieData
 import kotlinx.android.synthetic.main.activity_circle_menu.*
 import kotlinx.android.synthetic.main.activity_drag_circle.*
 import kotlinx.android.synthetic.main.activity_pie.*
+import kotlinx.android.synthetic.main.activity_pull_refresh.*
 import kotlinx.android.synthetic.main.activity_rcy.*
 import kotlinx.android.synthetic.main.activity_switch.*
 
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rcy)
+        setContentView(R.layout.activity_pull_refresh)
         "onCreate()执行完毕".log()
 
         mockPieData()
@@ -30,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         mockDragCircle()
 
         mockRcy()
+
+        mockPullRefresh()
+    }
+
+    private fun mockPullRefresh() {
+        pull_to_refresh.setupHeaderViewManger()
     }
 
 
