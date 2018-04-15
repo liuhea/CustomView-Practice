@@ -65,7 +65,10 @@ class HeaderViewManager(var context: Context) {
 
     fun changeToRefreshing() {
         txtState?.text = "刷新中"
+        // 控件身上执行过动画，需要先清除动画，后设置隐藏才会生效
+        imgUpArrow?.clearAnimation()
         imgUpArrow?.visibility = View.INVISIBLE
+        imgLoading?.visibility=View.VISIBLE
         animationDrawable.start()
     }
 }
