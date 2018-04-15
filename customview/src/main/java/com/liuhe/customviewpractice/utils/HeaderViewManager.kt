@@ -1,6 +1,7 @@
 package com.liuhe.customviewpractice.utils
 
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.view.View
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
@@ -16,10 +17,11 @@ class HeaderViewManager(var context: Context) {
     private var headerView: View? = null
     var txtState: TextView? = null
     var imgUpArrow: ImageView? = null
-    var imgDownArrow: ImageView? = null
+    var imgLoading: ImageView? = null
 
     private lateinit var upAnim: RotateAnimation
     lateinit var downAnim: RotateAnimation
+    lateinit var animationDrawable: AnimationDrawable
 
     init {
         initAnimation()
@@ -42,7 +44,8 @@ class HeaderViewManager(var context: Context) {
             headerView = View.inflate(context, R.layout.view_refresh_header_normal, null)
             txtState = headerView?.findViewById(R.id.tv_normal_refresh_header_status)
             imgUpArrow = headerView?.findViewById(R.id.iv_normal_refresh_header_arrow)
-            imgDownArrow = headerView?.findViewById(R.id.iv_normal_refresh_header_chrysanthemum)
+            imgLoading = headerView?.findViewById(R.id.iv_normal_refresh_header_chrysanthemum)
+            animationDrawable = imgLoading?.drawable as AnimationDrawable
         }
         return headerView
     }
@@ -52,17 +55,17 @@ class HeaderViewManager(var context: Context) {
 
     fun changeToPullDown() {
         txtState?.text = "下拉刷新"
-        imgDownArrow?.animation=downAnim
-        downAnim.start()
+        imgLoading?.animation = downAnim
     }
 
     fun changeToReleaseRefresh() {
         txtState?.text = "释放刷新"
-        imgDownArrow?.animation=upAnim
-        upAnim.start()
+        imgUpArrow?.animation = upAnim
     }
 
     fun changeToRefreshing() {
         txtState?.text = "刷新中"
+        imgUpArrow?.visibility = View.INVISIBLE
+        animationDrawable.start()
     }
 }

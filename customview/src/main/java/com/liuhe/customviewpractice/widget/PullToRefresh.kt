@@ -1,5 +1,6 @@
 package com.liuhe.customviewpractice.widget
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -98,12 +99,49 @@ class PullToRefresh @JvmOverloads constructor(private var mContext: Context, att
                 return handleActionMove(event)
             }
             MotionEvent.ACTION_UP -> {
-                mHeaderView.postDelayed({
-                    mHeaderView.setPadding(0, minHeaderViewPaddingTop, 0, 0)
-                }, 500)
+                handleActionUp()
             }
         }
         return super.onTouchEvent(event)
+    }
+
+    private fun handleActionUp(): Boolean {
+        when (currentState) {
+            RefreshState.PULL_DOWN -> {
+                hiddenRefreshView()
+                currentState = RefreshState.IDLE
+            }
+            RefreshState.RELEASE_REFRESH -> {
+                currentState = RefreshState.REFRESHING
+                changeHeaderViewPaddingTopToZero()
+                handleRefreshStatesChanged(currentState)
+            }
+        }
+        // 只要头部拉出一点点，up事件就由当前控件处理
+        return mHeaderView.paddingTop > minHeaderViewPaddingTop
+
+    }
+
+    private fun changeHeaderViewPaddingTopToZero() {
+        ValueAnimator.ofInt(mHeaderView.paddingTop, 0).apply {
+            addUpdateListener {
+                //获取值动画在动画变化过程中的值
+                mHeaderView.setPadding(0, it.animatedValue as Int, 0, 0)
+            }
+            duration = 300
+        }.start()
+
+    }
+
+    private fun hiddenRefreshView() {
+        ValueAnimator.ofInt(mHeaderView.paddingTop, minHeaderViewPaddingTop).apply {
+            addUpdateListener {
+                //获取值动画在动画变化过程中的值
+
+                mHeaderView.setPadding(0, it.animatedValue as Int, 0, 0)
+            }
+            duration = 300
+        }.start()
     }
 
     private fun handleRefreshStatesChanged(currentState: RefreshState) {
