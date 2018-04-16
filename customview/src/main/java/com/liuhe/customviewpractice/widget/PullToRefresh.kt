@@ -3,6 +3,7 @@ package com.liuhe.customviewpractice.widget
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
+import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.MotionEvent
@@ -186,6 +187,19 @@ class PullToRefresh @JvmOverloads constructor(private var mContext: Context, att
             return true
         }
         return false
+    }
+
+
+    /**
+     * 当前控件及子控件全部加载完毕，调用的方法
+     */
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        // ViewHeader作为第0个子View
+        val contentView = getChildAt(1)
+        if (contentView is RecyclerView) {
+
+        }
     }
 }
 
