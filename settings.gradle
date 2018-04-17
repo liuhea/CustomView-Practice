@@ -1,8 +1,11 @@
-include ':customview', ':dagger2demo', ':aiqiyidemo', ':jnidemo', ':lifecycledemo',
+include ':dagger2demo',
+        ':aiqiyidemo',
+        ':jnidemo',
+        ':lifecycledemo',
         ':bigdrawableloaddemo',
         ':kotlinutilslib',
-//        ':aidlservice',
-//        ':aidlclient',
-//        ':viewpagerdemo',
-//        ':lifecycledemo',
-        ':videodemo'
+        ':aidlservice',
+        ':aidlclient',
+        ':viewpagerdemo',
+        ':videodemo',
+        'rxJavaDemo'
