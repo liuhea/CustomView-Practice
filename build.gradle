@@ -33,7 +33,8 @@ ext {
     minSdkVersion = 15
     targetSdkVersion = 26
     compileSdkVersion = 26
-
+    versionCode=1
+    versionName='1.0.0'
     // App dependencies
     supportLibraryVersion = '26.1.0'
     daggerVersion = '2.11'
