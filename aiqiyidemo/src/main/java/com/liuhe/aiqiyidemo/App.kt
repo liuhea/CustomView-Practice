@@ -2,6 +2,7 @@ package com.liuhe.aiqiyidemo
 
 import android.app.Activity
 import android.app.Application
+import com.liuhe.kotlinutilslib.launchApp
 import java.util.*
 
 /**

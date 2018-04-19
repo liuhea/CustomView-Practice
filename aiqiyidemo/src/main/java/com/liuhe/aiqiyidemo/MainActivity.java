@@ -1,6 +1,6 @@
 package com.liuhe.aiqiyidemo;
 
-import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.liuhe.aiqiyidemo.bindview.BindView;
 import com.liuhe.aiqiyidemo.bindview.BindViewUtils;
-import com.liuhe.aiqiyidemo.launchmode.AActivity;
+import com.liuhe.kotlinutilslib.LaunchUtilsKt;
 
 /**
  * @author liuhe
@@ -32,8 +32,14 @@ public class MainActivity extends AppCompatActivity {
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this, AActivity.class);
+//                startActivity(intent);
+//                Intent intent=new Intent();
+//                //包名 包名+类名（全路径）
+//                intent.setClassName(" com.autodesk.shejijia.consumer", "com.linxcool.PlaneActivity");
+//                startActivity(intent);
+                LaunchUtilsKt.launchApp(MainActivity.this, "com.autodesk.shejijia.consumer");
+
             }
         });
 
