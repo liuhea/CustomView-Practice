@@ -17,13 +17,26 @@ import android.text.TextUtils
  */
 
 /**
+ * 小米应用市场
+ */
+const val MI_WEB_MARKET = "http://app.mi.com/details?id="
+
+/**
+ * 应用宝
+ */
+const val TENCENT_WEB_MARKET = "http://sj.qq.com/myapp/detail.htm?apkName="
+
+/**
  * 启动指定app
  * @param applicationId App的包名
  * @param marketPkgId  应用市场的包名
  */
 @JvmOverloads
 fun Context.launchApp(applicationId: String, marketPkgId: String = "") {
-    // 判断是否安装过App，否则去市场下载
+    if (TextUtils.isEmpty(applicationId)) {
+        return
+    }
+
     if (isAppInstalled(applicationId)) {
         startActivity(this.packageManager.getLaunchIntentForPackage(applicationId))
     } else {
@@ -51,29 +64,21 @@ fun Context.isAppInstalled(applicationId: String): Boolean {
  * @param marketPkg 应用市场的包名
  */
 fun Context.goToMarket(applicationId: String, marketPkg: String = "") {
-    val uri = Uri.parse("market://details?id=$applicationId")
-    val goToMarket = Intent(ACTION_VIEW, uri)
+    val goToMarket = Intent(ACTION_VIEW)
+    goToMarket.data = Uri.parse("market://details?id=$applicationId")
     try {
-        // 如果没给市场的包名，则系统会弹出市场的列表让你进行选择。
-        if (!TextUtils.isEmpty(marketPkg)) {
-            goToMarket.`package` = marketPkg
+        // 判断是否安装应用市场
+        if (null != goToMarket.resolveActivity(applicationContext.packageManager)) {
+            // 如果指定应用市场，需要判断是否安装
+            if (!TextUtils.isEmpty(marketPkg) && isAppInstalled(marketPkg)) {
+                goToMarket.`package` = marketPkg
+            }
+        } else {
+            // 没有应用市场，跳转用户浏览器的指定应用市场，以
+            goToMarket.data = Uri.parse("$TENCENT_WEB_MARKET$applicationId")
         }
         startActivity(goToMarket)
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
-        goToMarket.data = Uri.parse("http://m.app.mi.comdetails?id=" + getPackageName());
-
     }
 }
-
-//
-////存在手机里没安装应用市场的情况，跳转会包异常，做一个接收判断
-//if (intent.resolveActivity(getPackageManager()) != null) { //可以接收
-//    startActivity(intent);
-//} else { //没有应用市场，我们通过浏览器跳转到Google Play
-//    intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
-////这里存在一个极端情况就是有些用户浏览器也没有，再判断一次
-//    if (intent.resolveActivity(getPackageManager()) != null) { //有浏览器
-//        startActivity(intent);
-//    } else { //天哪，这还是智能手机吗？
-//        Toast.makeText(this, "天啊，您没安装应用市场，连浏览器也没有，您买个手机干啥？", Toast.LENGTH_SHORT).show();

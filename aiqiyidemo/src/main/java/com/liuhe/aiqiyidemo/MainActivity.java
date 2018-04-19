@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 //                //包名 包名+类名（全路径）
 //                intent.setClassName(" com.autodesk.shejijia.consumer", "com.linxcool.PlaneActivity");
 //                startActivity(intent);
-                LaunchUtilsKt.launchApp(MainActivity.this, "com.autodesk.shejijia.consumer");
+                LaunchUtilsKt.launchApp(MainActivity.this, "com.autodesk.shejijia.consumer","com.tencent.android.qqdownloader");
 
             }
         });
