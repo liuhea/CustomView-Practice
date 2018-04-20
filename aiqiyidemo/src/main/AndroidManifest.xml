@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.liuhe.aiqiyidemo">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -22,7 +22,27 @@
 
         <activity
             android:name=".launchmode.AActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask">
+
+            <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
+            <intent-filter>
+                <!--协议部分，随便设置
+                    lh://com.liuhe.aiqiyidemo:8888/AActivity?time=10011002
+                 -->
+                <data
+                    android:host="${applicationId}"
+                    android:path="/AActivity"
+                    android:port="8888"
+                    android:scheme="lh" />
+
+                <!--下面这几行也必须得设置-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".launchmode.BActivity"
             android:launchMode="standard" />

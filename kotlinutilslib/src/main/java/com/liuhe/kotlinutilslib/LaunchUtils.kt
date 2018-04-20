@@ -7,6 +7,7 @@ import android.content.Intent.ACTION_VIEW
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 
 
 /**
@@ -44,6 +45,21 @@ fun Context.launchApp(applicationId: String, marketPkgId: String = "") {
     }
 }
 
+
+/**
+ * 根据清单文件配置的scheme启动Activity
+ */
+fun Context.launchActivity(uri: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    val targetActivity = intent.resolveActivity(applicationContext.packageManager)
+    if (null != targetActivity) {
+        startActivity(intent)
+    } else {
+        Log.e("lh", "not found activity matching the uri")
+    }
+}
+
+
 /**
  * 检测某个应用是否安装
  *
@@ -80,5 +96,6 @@ fun Context.goToMarket(applicationId: String, marketPkg: String = "") {
         startActivity(goToMarket)
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
+        Log.e("lh", "not found market or browser")
     }
 }

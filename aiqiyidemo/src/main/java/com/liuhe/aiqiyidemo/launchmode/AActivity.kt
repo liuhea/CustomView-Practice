@@ -3,11 +3,11 @@ package com.liuhe.aiqiyidemo.launchmode
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.bumptech.glide.Glide
 import com.liuhe.aiqiyidemo.R
 import com.liuhe.kotlinutilslib.log
 import kotlinx.android.synthetic.main.activity_a.*
-
 
 /**
  * https://blog.csdn.net/liuhe688/article/details/6761337
@@ -29,8 +29,25 @@ class AActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btn_load_img.setOnClickListener{
+        btn_load_img.setOnClickListener {
             Glide.with(this).load(url).into(img_launch)
+        }
+
+        mockIntentFilter()
+
+    }
+
+    private fun mockIntentFilter() {
+        val uri = intent.data
+        if (uri != null) {
+            val data = intent.data
+            Log.d(TAG + "Scheme", "" +
+                    "\nuri:$data" +
+                    "\nscheme:${data.scheme}" +
+                    "\nauthority:${data.authority}" +
+                    "\npath：${data.path}" +
+                    "\nquery:${data.query}" +
+                    "\nqueryParameter:${data.getQueryParameter("time")}")
         }
     }
 
