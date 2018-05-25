@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.liuhe.aiqiyidemo.R
+import com.liuhe.aiqiyidemo.SingleUtils
 import com.liuhe.kotlinutilslib.log
+import com.liuhe.kotlinutilslib.toast
 import kotlinx.android.synthetic.main.activity_a.*
 
 /**
@@ -25,8 +27,11 @@ class AActivity : AppCompatActivity() {
 
         txt_launch.text = "AActivity"
         txt_launch.setOnClickListener {
+            SingleUtils.getInstance().varStr="test single"
+
             val intent = Intent(this@AActivity, BActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         btn_load_img.setOnClickListener {
@@ -60,6 +65,7 @@ class AActivity : AppCompatActivity() {
         super.onResume()
         "$TAG-onResume".log()
 
+        toast(SingleUtils.getInstance().varStr)
     }
 
     override fun onPause() {
