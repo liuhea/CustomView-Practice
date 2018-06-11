@@ -4,7 +4,9 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.liuhe.aiqiyidemo.R
+import com.liuhe.aiqiyidemo.SingleUtils
 import com.liuhe.kotlinutilslib.log
+import com.liuhe.kotlinutilslib.toast
 import kotlinx.android.synthetic.main.activity_a.*
 
 class BActivity : AppCompatActivity() {
@@ -17,6 +19,9 @@ class BActivity : AppCompatActivity() {
         "$TAG-onCreate".log()
 
         txt_launch.text = "BActivity"
+
+        toast(SingleUtils.getInstance().varStr)
+
 
         txt_launch.setOnClickListener {
             val intent = Intent(this@BActivity, AActivity::class.java)

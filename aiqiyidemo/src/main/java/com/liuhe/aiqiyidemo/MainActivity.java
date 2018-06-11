@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, AActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, AActivity.class);
+                startActivity(intent);
 
-                LaunchUtilsKt.launchActivity(MainActivity.this, "lh://com.liuhe.aiqiyidemo:8008/AActivity?time=10011002");
+//                LaunchUtilsKt.launchActivity(MainActivity.this, "lh://com.liuhe.aiqiyidemo:8008/AActivity?time=10011002");
             }
         });
 
